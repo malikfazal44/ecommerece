@@ -1,0 +1,58 @@
+﻿@model IList<Customer>
+
+<h1>Number of Total Users: @Model.Count</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile Number</th>
+            <th>AAddress</th>
+            <th>City</th>
+            <th>DOB</th>
+            <th>Gender</th>
+        </tr>
+        
+    </thead>
+    <tbody>
+        @foreach (Customer obj in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="" asp-action="" class="btn btn-primary btn-sm">View</a>
+                    <a asp-controller="" asp-action="" class="btn btn-success btn-sm">Update</a>
+                    <a asp-controller="UserAdmin" asp-action="DeleteCustomer" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+                <td>
+                    @obj.CustId
+                </td>
+                <td>
+                    @obj.CustName
+
+                </td>
+                <td>
+                    @obj.CustEmail
+                </td>
+                <td>
+                    @obj.CustPhone
+                </td>
+                <td>
+                    @obj.CustAddress
+                </td>
+                <td>
+                    @obj.CustCity
+                </td>
+                <td>
+                    @obj.CustDob
+                </td>
+                <td>
+                    @obj.CustGender
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

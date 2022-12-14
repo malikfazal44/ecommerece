@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to My Theta Ecommerece Website</h1>
+    @*  <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+
+</div>
+<div>
+    <h3>select Your Profile</h3>
+    <ul>
+        <li>
+            <a asp-controller="UserAdmin" asp-action="Index" class="btn btn-primary">
+                User Admin
+            </a>
+        </li>
+        <li>
+            <a asp-controller="Customer" asp-action="Index" class="btn btn success">
+        Customer</a>
+        </li>
+        <li>
+            <a asp-controller="Seller" asp-action="" class="btn btn-danger">
+        Seller</a>
+        </li>
+    </ul>
+</div>

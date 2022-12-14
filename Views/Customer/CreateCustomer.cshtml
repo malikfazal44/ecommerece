@@ -1,0 +1,45 @@
+﻿@model Customer
+<h1>
+    Fill the Following Form
+</h1>
+<form asp-controller="Customer" asp-action="CreateCustomer" method="post">
+    <div class="mb-3 form-group">
+        <label class="form-label">Full Name : </label>
+        <input type="text" asp-for="CustName" class="form-control" />
+        <span class="text-danger" asp-validation-for="CustName"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Email : </label>
+        <input type="email" asp-for="CustEmail" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Mobile Number  : </label>
+        <input type="tel" asp-for="CustPhone" class="form-control" placeholder="+92-300-1234567" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Address  : </label>
+        <input type="text" asp-for="CustAddress" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">City  : </label>
+        <input type="text" asp-for="CustCity" class="form-control" />
+    </div>
+    <div class="mb-3"
+        <label class="form-label">Date of Birth  : </label>
+        <input type="datetime" asp-for="CustDob" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Gender : </label>
+        <input type="text" asp-for="CustGender" class="form-control" />
+    </div>
+    
+
+    <input type="submit" value="save" class="btn btn-success"/>
+</form>
+
+
+        @section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+        }

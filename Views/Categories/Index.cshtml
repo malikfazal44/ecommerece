@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ecommerece.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CatName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatDesc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetaData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeoData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatImage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatDesc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetaData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeoData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CatImage)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CatId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CatId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CatId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

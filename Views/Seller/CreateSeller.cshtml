@@ -1,0 +1,50 @@
+﻿@model Seller
+<h1 class="display-6">
+    Sell your Products with us. 
+</h1>
+<div>
+    <p class="col-4 align-content-center card-text">
+        Just click A button, create A new account and make your online shop with us, sell your products
+        and earn money.
+    </p><br />
+    <h1 class="alert-heading display-6">
+        Fill the following form and create Your Account
+    </h1>
+    <form asp-controller="Seller" asp-action="CreateSeller" method="post">
+        <div>
+            <label class="form-label form-check-label">Full Name</label>
+            <input type="text" asp-for="SellerName" placeholder="First and Last name" class="form-control" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Email</label>
+            <input type="email" asp-for="SellerEmail" class="form-control" placeholder="abc@email.com" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Mobile NUmber</label>
+            <input type="tel" asp-for="SellerPhone" class="form-control" placeholder="0092-300-1234567" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Address</label>
+            <input type="text" asp-for="SellerAddress" class="form-control" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Company Name</label>
+            <input type="text" asp-for="CompanyName" class="form-control" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Website URL</label>
+            <input type="url" asp-for="WebsiteUrl" class="form-control" placeholder="www.CompanyName.com" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">CNIC number</label>
+            <input type="number" asp-for="SellerCnic" class="form-control" placeholder="34601-1234567-1" />
+        </div>
+        <div>
+            <label class="form-label form-check-label">Gender</label>
+            <input type="text" asp-for="SellerGender" class="form-control" />
+        </div>
+        <input type="submit" value="save" class="btn btn-success" />
+        
+    </form>
+
+</div>
