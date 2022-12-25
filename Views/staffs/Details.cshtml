@@ -10,6 +10,12 @@
     <h4>staff</h4>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StaffImage)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.StaffImage" alt="@Model.StaffName" class="img img-fluid" />
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StaffName)
         </dt>
@@ -46,7 +52,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.StaffDob)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SystemUserId)
         </dt>
         <dd class = "col-sm-10">
@@ -93,13 +99,8 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StaffImage)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StaffImage)
-        </dd>
+        </dd>*@
+        
     </dl>
 </div>
 <div>

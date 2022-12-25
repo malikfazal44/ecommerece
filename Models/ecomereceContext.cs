@@ -572,9 +572,11 @@ namespace ecommerece.Models
 
             modelBuilder.Entity<UserAdmin>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserId);
 
                 entity.ToTable("user_admin");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.CreatedBy)
                     .HasMaxLength(50)
@@ -601,8 +603,6 @@ namespace ecommerece.Models
                 entity.Property(e => e.Status).HasColumnName("status");
 
                 entity.Property(e => e.Type).HasColumnName("type");
-
-                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.UserName)
                     .HasMaxLength(50)
@@ -681,7 +681,7 @@ namespace ecommerece.Models
                     .HasColumnName("staff_email");
 
                 entity.Property(e => e.StaffImage)
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .HasColumnName("staff_image");
 
                 entity.Property(e => e.StaffName)

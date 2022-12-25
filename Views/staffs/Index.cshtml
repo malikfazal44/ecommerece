@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.StaffImage)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.StaffName)
             </th>
             <th>
@@ -30,7 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.StaffDob)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.SystemUserId)
             </th>
             <th>
@@ -53,16 +56,22 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StaffImage)
-            </th>
+            </th>*@
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @if(string.IsNullOrEmpty(item.StaffImage)){
+
+                    }
+                    else{
+                    <img src="@item.StaffImage" alt="@item.StaffName" class="img img-thumbnail" style="max-height: 100px;" />
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StaffName)
             </td>
@@ -81,7 +90,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StaffDob)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.SystemUserId)
             </td>
             <td>
@@ -104,10 +113,8 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StaffImage)
-            </td>
+            </td>*@
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.StaffId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.StaffId">Details</a> |

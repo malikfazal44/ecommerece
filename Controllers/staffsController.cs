@@ -12,10 +12,12 @@ namespace ecommerece.Controllers
     public class staffsController : Controller
     {
         private readonly ecomereceContext _context;
+        private readonly IWebHostEnvironment _img;
 
-        public staffsController(ecomereceContext context)
+        public staffsController(ecomereceContext context, IWebHostEnvironment img)
         {
             _context = context;
+            _img = img;
         }
 
         // GET: staffs
@@ -52,10 +54,22 @@ namespace ecommerece.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffId,StaffName,StaffPhone,StaffEmail,City,StaffAddress,StaffDob,SystemUserId,Role,Status,MetaData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,StaffImage")] staff staff)
+        public async Task<IActionResult> Create([Bind("StaffId,StaffName,StaffPhone,StaffEmail,City,StaffAddress,StaffDob,SystemUserId,Role,Status,MetaData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,StaffImage")] staff staff, 
+            IFormFile PP)
         {
+            string FindExt = Path.GetExtension(PP.FileName);
+            string GiveName = Guid.NewGuid().ToString();
+            string Basepath = "/data/img/profpic/";
+            string FinalPath = Basepath + GiveName + FindExt;
+            using (FileStream StImg = new FileStream(_img.WebRootPath + FinalPath, FileMode.Create))
+            {
+                PP.CopyTo(StImg);
+            }
+            
+
             if (ModelState.IsValid)
             {
+                staff.StaffImage = FinalPath;
                 _context.Add(staff);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
