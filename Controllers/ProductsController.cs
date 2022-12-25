@@ -6,16 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ecommerece.Models;
+using Microsoft.AspNetCore.SignalR.Protocol;
+using Microsoft.AspNetCore.Identity;
 
 namespace ecommerece.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly ecomereceContext _context;
+        private readonly IWebHostEnvironment _img;
 
-        public ProductsController(ecomereceContext context)
+        public ProductsController(ecomereceContext context,IWebHostEnvironment img)
         {
             _context = context;
+            _img = img;
         }
 
         // GET: Products
@@ -53,10 +57,30 @@ namespace ecommerece.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] Product product,
+            IList<IFormFile> prodImg)
         {
+            string MultipleImages = "";
+            foreach (var images in prodImg)
+            {
+                
+                string FinalPath = "/data/img/products/" + Guid.NewGuid().ToString() + Path.GetExtension(images.FileName);
+                using (FileStream proImg = new FileStream(_img.WebRootPath + FinalPath, FileMode.Create))
+                {
+                    images.CopyTo(proImg);
+                }
+                MultipleImages = MultipleImages+ "," + FinalPath;
+
+            }
+            
+
             if (ModelState.IsValid)
             {
+                if (MultipleImages.StartsWith(","))
+                {
+                    MultipleImages = MultipleImages.Remove(0, 1);
+                }
+                product.ProductImg = MultipleImages;
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

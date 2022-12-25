@@ -360,7 +360,7 @@ namespace ecommerece.Models
                     .HasColumnName("modified_date");
 
                 entity.Property(e => e.ProductImg)
-                    .HasMaxLength(50)
+                    .HasMaxLength(1500)
                     .HasColumnName("product_img");
 
                 entity.Property(e => e.ProductName)

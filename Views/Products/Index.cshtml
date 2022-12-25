@@ -118,7 +118,17 @@
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.ProductImg)
+                    @{
+                        var separated = item.ProductImg.Split(",");
+                    }
+                    @if(string.IsNullOrEmpty(separated[0]))
+                    {
+
+                    }
+                    else
+                    {
+                <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
+                    }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
