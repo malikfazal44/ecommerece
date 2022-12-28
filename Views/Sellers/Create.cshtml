@@ -1,0 +1,156 @@
+﻿@model ecommerece.Models.Seller
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Seller</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SellerName" class="control-label"></label>
+                <input asp-for="SellerName" class="form-control" />
+                <span asp-validation-for="SellerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerPhone" class="control-label"></label>
+                <input asp-for="SellerPhone" type="tel" class="form-control" />
+                <span asp-validation-for="SellerPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerEmail" class="control-label"></label>
+                <input asp-for="SellerEmail" type="email" class="form-control" />
+                <span asp-validation-for="SellerEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerAddress" class="control-label"></label>
+                <input asp-for="SellerAddress" class="form-control" />
+                <span asp-validation-for="SellerAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="WebsiteUrl" class="control-label"></label>
+                <input asp-for="WebsiteUrl" class="form-control" />
+                <span asp-validation-for="WebsiteUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerCnic" class="control-label"></label>
+                <input asp-for="SellerCnic" class="form-control" />
+                <span asp-validation-for="SellerCnic" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                @*<input asp-for="City" class="form-control" />*@
+                <select asp-for="City" class="form-control">
+                    <option value="">---Please select Your City---</option>
+                    <option value="1">Sialkot</option>
+                    <option value="2">Gujranwala</option>
+                    <option value="3">Lahore</option>
+                    <option value="4">Islamabad</option>
+                    <option value="5">Karachi</option>
+                </select>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="ShortDesc" class="control-label"></label>
+                <input asp-for="ShortDesc" class="form-control" />
+                <span asp-validation-for="ShortDesc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LongDesc" class="control-label"></label>
+                <input asp-for="LongDesc" class="form-control" />
+                <span asp-validation-for="LongDesc" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="SellerGender" class="control-label"></label>
+                @*<input asp-for="SellerGender" class="form-control" />*@
+                <select asp-for="SellerGender" class="form-control">
+                    <option value="">---Select your Gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+                <span asp-validation-for="SellerGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SellerDob" class="control-label"></label>
+                <input asp-for="SellerDob" class="form-control" />
+                <span asp-validation-for="SellerDob" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="SystemUserId" class="control-label"></label>
+                <input asp-for="SystemUserId" class="form-control" />
+                <span asp-validation-for="SystemUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <input asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaritalStatus" class="control-label"></label>
+                <input asp-for="MaritalStatus" class="form-control" />
+                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedBy" class="control-label"></label>
+                <input asp-for="ModifiedBy" class="form-control" />
+                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedDate" class="control-label"></label>
+                <input asp-for="ModifiedDate" class="form-control" />
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MetaData" class="control-label"></label>
+                <input asp-for="MetaData" class="form-control" />
+                <span asp-validation-for="MetaData" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SeoData" class="control-label"></label>
+                <input asp-for="SeoData" class="form-control" />
+                <span asp-validation-for="SeoData" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="SellerImg" class="control-label"></label>
+                <input id="sellerPP" name="sellerPP" type="file" class="form-control" />
+                <span asp-validation-for="SellerImg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

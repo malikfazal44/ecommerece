@@ -57,9 +57,14 @@ namespace ecommerece.Controllers
         public async Task<IActionResult> Create([Bind("StaffId,StaffName,StaffPhone,StaffEmail,City,StaffAddress,StaffDob,SystemUserId,Role,Status,MetaData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,StaffImage")] staff staff, 
             IFormFile PP)
         {
+            //first we get file through iformfile PP. PP is name inside view and will map it via parameter.
+            // pp.filename will get name of fil name which will be uploaded. in findext will get extension of file 
             string FindExt = Path.GetExtension(PP.FileName);
+            // fil will have its own name. so we will rename file through guid.newguid().tostring
             string GiveName = Guid.NewGuid().ToString();
-            string Basepath = "/data/img/profpic/";
+            // follwing is base path where file will be saved
+            string Basepath = "/data/img/staffprofpic/";
+            // _img.webrootpath is the root path which we get through entity framework.
             string FinalPath = Basepath + GiveName + FindExt;
             using (FileStream StImg = new FileStream(_img.WebRootPath + FinalPath, FileMode.Create))
             {
@@ -69,6 +74,7 @@ namespace ecommerece.Controllers
 
             if (ModelState.IsValid)
             {
+                // file saved inside the model
                 staff.StaffImage = FinalPath;
                 _context.Add(staff);
                 await _context.SaveChangesAsync();

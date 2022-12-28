@@ -507,7 +507,7 @@ namespace ecommerece.Models
                     .HasColumnName("seller_gender");
 
                 entity.Property(e => e.SellerImg)
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .HasColumnName("seller_img");
 
                 entity.Property(e => e.SellerName)
