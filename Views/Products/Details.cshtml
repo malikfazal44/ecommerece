@@ -100,42 +100,7 @@
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Status)
                 </dd>
-                @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.MetaData)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.MetaData)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.SeoData)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.SeoData)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CreatedBy)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CreatedBy)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CreatedDate)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CreatedDate)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.ModifiedBy)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.ModifiedBy)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.ModifiedDate)
-                </dd>*@
+               
                 
             </dl>
         </div>
@@ -144,6 +109,10 @@
             <a asp-action="Index">Back to List</a>
         </div>
 </div>
+</div>
+
+<div id="RI" class="row">
+    
 </div>
 
 @section Scripts{
@@ -157,6 +126,12 @@
 
                 $(".largeImg").attr("src", clickedImage.attr("src"));
             });
+        });
+    </script>
+    @*Ajax code starts. it prevents to load in DOM.*@
+    <script>
+        $(function(){
+            $('#RI').load('/Products/GetRI?id=@Model.ProductId&cid=@Model.CatId');
         });
     </script>
 }

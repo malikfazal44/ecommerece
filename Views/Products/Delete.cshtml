@@ -17,12 +17,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ProductName)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.SellerId)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SellerId)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DeliveryDays)
         </dt>
@@ -47,12 +47,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ShortDecsc)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.LongDesc)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LongDesc)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProductPrice)
         </dt>
@@ -65,7 +65,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DeliveryCharges)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
         <dd class = "col-sm-10">
@@ -106,12 +106,23 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ProductImg)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductImg)
+           @* @Html.DisplayFor(model => model.ProductImg)*@
+            @{
+                var separated = Model.ProductImg.Split(",");
+            }
+            @if (string.IsNullOrEmpty(separated[0]))
+            {
+
+            }
+            else
+            {
+                <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
+            }
         </dd>
     </dl>
     

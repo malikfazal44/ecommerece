@@ -25,12 +25,14 @@ namespace ecommerece.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Products.ToListAsync());
+            ViewBag.Categories = _context.Categories.ToList();
+            return View(await _context.Products.ToListAsync());
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.CatList = _context.Categories.ToList();
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -49,6 +51,7 @@ namespace ecommerece.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.CatList = _context.Categories.ToList();
             return View();
         }
 
@@ -169,6 +172,14 @@ namespace ecommerece.Controllers
             var product = await _context.Products.FindAsync(id);
             if (product != null)
             {
+                var FilePath = product.ProductImg;
+                string FinalPath = _img.WebRootPath + FilePath;
+                FileInfo File = new FileInfo(FinalPath);
+                if (File.Exists)
+                {
+                    File.Delete();
+                }
+
                 _context.Products.Remove(product);
             }
             
@@ -179,6 +190,37 @@ namespace ecommerece.Controllers
         private bool ProductExists(int id)
         {
           return _context.Products.Any(e => e.ProductId == id);
+        }
+
+        //load function of ajax for not showing in DOM
+        public string GetRI(int id, int cid)
+        {
+
+            var CtgryLoad = _context.Products.Where(prods => prods.CatId==cid).Take(5) ;
+
+            string FinalPics = "";
+            foreach(Product P in CtgryLoad)
+            {
+                var separate = P.ProductImg.Split(',');
+                FinalPics += "<div class='col-4 m-2'><div class='card' style=width: 18rem;'>  <img class='card-img-top' " +
+                    "src='" + separate[0]  +"' style = 'max-height: 300px' >  " +
+                    "<div class='card-body'>    <h5 class='card-title'>"+ P.ProductName +"</h5>    " +
+                    "<p class='card-text'>"+ P.LongDesc +"</p>    " +
+                    "<a href='#' class='btn btn-primary'>Check Detail</a>  </div></div></div>";
+            }
+
+            return FinalPics;
+            //return "<div class='col-4'>        " +
+            //    "<div class='img img-thumbnail'>            " +
+            //    "<img src='/data/img/products/f63588de-285d-4e84-b3b0-505067b78559.jpeg' style='max-height: 100px;'/>        " +
+            //    "</div>    </div>    " +
+            //    "<div class='col-4'>        " +
+            //    "<div class='img img-thumbnail'>            " +
+            //    "<img src='/data/img/products/e63e933a-4223-47f5-9988-32632f1fe8b3.jpeg' style='max-height: 100px;' />        </div>    </div>    " +
+            //    "<div class='col-4'>        " +
+            //    "<div class='img img-thumbnail'>            " +
+            //    "<img src='/data/img/products/d91c5430-61f0-4f27-8eb5-7025b3bdfd36.jpeg' style='max-height: 100px;' />        </div>    </div>";
+         //   return "<h2 class = 'alert alert-danger'>This is action get ri from product controller</h2>";
         }
     }
 }

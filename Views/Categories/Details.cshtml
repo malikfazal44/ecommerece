@@ -11,18 +11,21 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CatName)
+            @*@Html.DisplayNameFor(model => model.CatName)*@
+            Category Name: 
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CatName)
+            
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CatDesc)
+            @*@Html.DisplayNameFor(model => model.CatDesc)*@
+            Category Description: 
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CatDesc)
         </dd>
-        <dt class = "col-sm-2">
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CatStatus)
         </dt>
         <dd class = "col-sm-10">
@@ -63,16 +66,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ModifiedDate)
-        </dd>
+        </dd>*@
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CatImage)
+           @* @Html.DisplayNameFor(model => model.CatImage)*@
+            Category Image: 
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CatImage)
+            @*@Html.DisplayFor(model => model.CatImage)*@
+            <img src="@Model.CatImage" class="img img-thumbnail" style="max-height: 100px;"/>
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CatId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.CatId" class="btn btn-success">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

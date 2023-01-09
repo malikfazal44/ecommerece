@@ -7,135 +7,110 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    
+    
 </p>
-<table class="table">
+<table id="producttable" class="table ">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductName)
+                Image
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.SellerId)
-            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.DeliveryDays)
+                Name
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.CatId)
-            </th>*@
+            <th>
+                Category
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ShortDecsc)
+                About
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LongDesc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryCharges)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <@*th>
-                @Html.DisplayNameFor(model => model.MetaData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SeoData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
+            @*<th>
+                Description
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.ProductImg)
+                Price
             </th>
+            <th>
+                Delivery Days
+            </th>
+            <th>
+                Delivery Charges
+            </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @{
+                        var separated = item.ProductImg.Split(",");
+                    }
+                    @if (string.IsNullOrEmpty(separated[0]))
+                    {
+
+                    }
+                    else
+                    {
+                        <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.SellerId)
-            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDays)
-            </td>
-            @*<td>
                 @Html.DisplayFor(modelItem => item.CatId)
-            </td>*@
+                @*@{
+                        var Categories = ViewBag.Categories;
+                }
+                <select asp-for="CatId" class="form-label" disabled>
+                        @foreach (Category P in Categories)
+                    {
+                        <option value="@P.CatId">@P.CatName</option>
+                    }
+                    </select>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ShortDecsc)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.LongDesc)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.ProductPrice)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveryDays)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeliveryCharges)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.MetaData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SeoData)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>*@
-            <td>
-                    @{
-                        var separated = item.ProductImg.Split(",");
-                    }
-                    @if(string.IsNullOrEmpty(separated[0]))
-                    {
-
-                    }
-                    else
-                    {
-                <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
-                    }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-dark btn-sm">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+@section Scripts{
+        <script>
+            $(document).ready(function () {
+                $('#producttable').DataTable();
+            });
+        </script>
+}

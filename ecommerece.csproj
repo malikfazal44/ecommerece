@@ -24,8 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\data\img\catpic\" />
     <Folder Include="wwwroot\data\img\sellerpp\" />
     <Folder Include="wwwroot\data\img\products\" />
+    <Folder Include="wwwroot\lib\fontawesome\" />
   </ItemGroup>
 
 </Project>

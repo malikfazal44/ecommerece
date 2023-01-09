@@ -9,16 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="CatTable" class="table display">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CatName)
+                Category Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CatDesc)
+               @* @Html.DisplayNameFor(model => model.CatDesc)*@
+                Category Description
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.CatStatus)
             </th>
             <th>
@@ -38,9 +39,10 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.CatImage)
+                @*@Html.DisplayNameFor(model => model.CatImage)*@
+                Category Image
             </th>
             <th></th>
         </tr>
@@ -54,7 +56,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CatDesc)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CatStatus)
             </td>
             <td>
@@ -74,16 +76,25 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>*@
+            <td>
+                @*@Html.DisplayFor(modelItem => item.CatImage)*@
+                    <img src="@item.CatImage" class="img img-thumbnail" style="max-height: 100px;" alt="" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CatImage)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CatId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CatId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CatId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.CatId" class="btn btn-warning"><i class="fa-sharp fa-solid fa-pen-to-square"></i>Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CatId" class="btn btn-primary"><i class="fa-duotone fa-circle-info"></i>Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CatId" class="btn btn-danger"><i class="fa-solid fa-trash"></i>Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+        $('#CatTable').DataTable();
+        });
+    </script>
+}

@@ -10,20 +10,20 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CatId" />
             <div class="form-group">
-                <label asp-for="CatName" class="control-label"></label>
+                <label asp-for="CatName" class="control-label">Category Name</label>
                 <input asp-for="CatName" class="form-control" />
                 <span asp-validation-for="CatName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CatDesc" class="control-label"></label>
+                <label asp-for="CatDesc" class="control-label">Category Description</label>
                 <input asp-for="CatDesc" class="form-control" />
                 <span asp-validation-for="CatDesc" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="CatStatus" class="control-label"></label>
                 <input asp-for="CatStatus" class="form-control" />
                 <span asp-validation-for="CatStatus" class="text-danger"></span>
@@ -57,10 +57,10 @@
                 <label asp-for="ModifiedDate" class="control-label"></label>
                 <input asp-for="ModifiedDate" class="form-control" />
                 <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
-                <label asp-for="CatImage" class="control-label"></label>
-                <input asp-for="CatImage" class="form-control" />
+                <label asp-for="CatImage" class="control-label">Category Image</label>
+                <input asp-for="CatImage" type="file" class="form-control" />
                 <span asp-validation-for="CatImage" class="text-danger"></span>
             </div>
             <div class="form-group">

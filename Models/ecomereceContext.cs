@@ -95,7 +95,7 @@ namespace ecommerece.Models
                     .HasColumnName("cat_desc");
 
                 entity.Property(e => e.CatImage)
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .HasColumnName("cat_image");
 
                 entity.Property(e => e.CatName)
@@ -165,7 +165,7 @@ namespace ecommerece.Models
                     .IsFixedLength();
 
                 entity.Property(e => e.CustImg)
-                    .HasMaxLength(50)
+                    .HasMaxLength(200)
                     .HasColumnName("cust_img");
 
                 entity.Property(e => e.CustName)
