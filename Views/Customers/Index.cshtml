@@ -2,9 +2,19 @@
 
 @{
     ViewData["Title"] = "Index";
+    var List = ViewBag.List;
 }
 
 <h1>Index</h1>
+
+<div class="d-flex justify-content-center">
+    <h4>
+        All
+        <span id="viewCounter" class="badge bg-info ">
+            @List
+        </span>
+    </h4>
+</div>
 
 <p class="d-flex justify-content-end">
     <a asp-action="Create" class="btn btn-success">Create New</a>

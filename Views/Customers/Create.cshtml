@@ -35,13 +35,23 @@
             <div class="form-group">
                 <label asp-for="CustCity" class="control-label">City</label>
                 @*<input asp-for="CustCity" class="form-control" />*@
-                <select class="form-control" asp-for="CustCity">
+                @*<select class="form-control" asp-for="CustCity">
                     <option value="">---Select your City---</option>
                     <option value="1">Sialkot</option>
                     <option value="2">Lahore</option>
                     <option value="3">Islamabad</option>
                     <option value="4">Karachi</option>
+                </select>*@
+                <!-- First select element -->
+                <select id="city" class="form-control" asp-for="CustCity">
+                    <option value="Sialkot">Sialkot</option>
+                    <option value="Gujranwala">Gujranwala</option>
+                    <option value="Narowal">Narowal</option>
                 </select>
+
+                <!-- Second select element (initially hidden) -->
+                <select id="tehsil"></select>
+
                 <span asp-validation-for="CustCity" class="text-danger"></span>
             </div><br />
             @*<div class="form-group">
@@ -116,5 +126,45 @@
 </div>
 
 @section Scripts {
+
+    <script>
+        // Get the first select element
+        var city = $('#city');
+
+        // Add an event listener for when the first select changes
+        city.on('change', function () {
+            // Get the selected value from the first select
+            var selectedValue = $(this).val();
+            // Clear the options of the second select
+            $('#tehsil').empty();
+
+            // Depending on the selected value of the first select,
+            // add different options to the second select
+            switch (selectedValue) {
+                case 'Sialkot':
+                    $('#tehsil').append('<option value="sialkot">Sialkot</option>');
+                    $('#tehsil').append('<option value="daska">Daska</option>');
+                    $('#tehsil').append('<option value="sambrial">Sambrial</option>');
+                    $('#tehsil').append('<option value="pasrur">Pasrur</option>');
+                    break;
+                case 'Gujranwala':
+                    $('#tehsil').append('<option value="gujranwalaCity">Gujranwala City</option>');
+                    $('#tehsil').append('<option value="gujranwalaSaddar">Gujranwala Saddar</option>');
+                    $('#tehsil').append('<option value="kamonki">Kamonki</option>');
+                    $('#tehsil').append('<option value="nowsheraVirkan">Nowshera Virkan</option>');
+                    break;
+                case 'Narowal':
+                    $('#tehsil').append('<option value="narowal">Narowal</option>');
+                    $('#tehsil').append('<option value="shakargarh">Shakargarh</option>');
+                    break;
+                default:
+                    $('#tehsil').append('<option value="">Please select an option</option>');
+            }
+        });
+
+    </script>
+
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
 }

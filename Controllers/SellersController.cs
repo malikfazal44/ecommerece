@@ -23,9 +23,11 @@ namespace ecommerece.Controllers
         }
 
         // GET: Sellers
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+
         {
-              return View(await _context.Sellers.ToListAsync());
+            ViewBag.List = _context.Sellers.ToList().Count();
+              return View( _context.Sellers.ToList());
         }
 
         // GET: Sellers/Details/5
