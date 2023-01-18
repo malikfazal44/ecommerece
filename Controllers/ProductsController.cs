@@ -23,10 +23,18 @@ namespace ecommerece.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
+            ViewBag.List = _context.Products.ToList().Count();
             ViewBag.Categories = _context.Categories.ToList();
-            return View(await _context.Products.ToListAsync());
+            return View( _context.Products.ToList());
+        }
+
+        // GET: Men Products
+        public IActionResult MenProducts()
+        {
+            // var Men = _context.Categories.Find(_context.Categories.Where(men => men.CatName == "Men"));
+            return View();
         }
 
         // GET: Products/Details/5
@@ -112,17 +120,35 @@ namespace ecommerece.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] 
+        Product product, IList<IFormFile> prodImg)
         {
             if (id != product.ProductId)
             {
                 return NotFound();
             }
+            string MultiImages = "";
+            foreach (var file in prodImg)
+            {
 
+
+                string FinalPath = "/data/img/products/" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                using (FileStream ProdFS = new FileStream(_img.WebRootPath, FileMode.Create))
+                {
+
+                    file.CopyTo(ProdFS);
+                }
+                MultiImages += "," + FinalPath;
+            }
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (MultiImages.StartsWith(","))
+                    {
+                        MultiImages = MultiImages.Remove(0, 1);
+                    }
+                    product.ProductImg = MultiImages;
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
@@ -186,6 +212,29 @@ namespace ecommerece.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // Delete using ajax
+        [HttpPost]
+        public bool DeleteBtn(int id)
+        {
+            try {
+                var Product_id = _context.Products.Find(id);
+                _context.Products.Remove(Product_id);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
+            
+        }
+        public int QuantityDetail(int id)
+        {
+            var ProductId = _context.Products.Find(id);
+            ProductId.Quantity = id;
+            return id;
+        }
 
         private bool ProductExists(int id)
         {
@@ -221,6 +270,21 @@ namespace ecommerece.Controllers
             //    "<div class='img img-thumbnail'>            " +
             //    "<img src='/data/img/products/d91c5430-61f0-4f27-8eb5-7025b3bdfd36.jpeg' style='max-height: 100px;' />        </div>    </div>";
          //   return "<h2 class = 'alert alert-danger'>This is action get ri from product controller</h2>";
+        }
+        public int? NumOfViews (int id)
+        {
+            var ViewCounter = _context.Products.Find(id).NumOfViews;
+            return ViewCounter;
+        }
+        // list counter for showing in index
+        
+
+        public void GetCounter(int id)
+        {
+            var Counter = _context.Products.Find(id);
+            Counter.NumOfViews = Counter.NumOfViews + 1;
+            _context.Update(Counter);
+            _context.SaveChanges();
         }
     }
 }

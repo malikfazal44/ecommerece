@@ -37,27 +37,33 @@
         <h1>Details</h1>
 
         <div>
-            <h4>Product</h4>
+            <h4 class="">Product</h4>
             <hr />
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ProductName)
+                    Name
+                    
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ProductName)
+                    <span id="viewCounter" class="badge bg-info"></span>
+                    
                 </dd>
+                @*<dt class="col-sm-2">
+                    Views
+
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.NumOfViews)
+
+                </dd>*@
                 @*<dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.SellerId)
                 </dt>
                 <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.SellerId)
                 </dd>*@
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.DeliveryDays)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.DeliveryDays)
-                </dd>
+                
                 @*<dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.CatId)
                 </dt>
@@ -65,41 +71,47 @@
                 @Html.DisplayFor(model => model.CatId)
                 </dd>*@
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Quantity)
+                    Stock
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Quantity)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ShortDecsc)
+                    About
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ShortDecsc)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LongDesc)
+                    Description
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.LongDesc)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ProductPrice)
+                    Price
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ProductPrice)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.DeliveryCharges)
+                    Delivery Days
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.DeliveryDays)
+                </dd>
+                <dt class="col-sm-2">
+                    Delivery Charges
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.DeliveryCharges)
                 </dd>
-                <dt class="col-sm-2">
+                @*<dt class="col-sm-2">
                     @Html.DisplayNameFor(model => model.Status)
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Status)
-                </dd>
+                </dd>*@
                
                 
             </dl>
@@ -126,13 +138,27 @@
 
                 $(".largeImg").attr("src", clickedImage.attr("src"));
             });
+        @*Ajax code starts. it prevents to load in DOM.*@
+
+                $(function () {
+                    //$('#counter').load('/Products/NumOfViews?id=@Model.ProductId');
+                    $('#RI').load('/Products/GetRI?id=@Model.ProductId&cid=@Model.CatId');
+                });
+                $(function (){
+                $('#viewCounter').load('/Products/NumOfViews?id=@Model.ProductId');
+                });
+
+
+            $.ajax({
+                url: '/Products/GetCounter',
+                type: 'post' ,
+                data: {
+                    id: '@Model.ProductId'
+                }
+            });
         });
-    </script>
-    @*Ajax code starts. it prevents to load in DOM.*@
-    <script>
-        $(function(){
-            $('#RI').load('/Products/GetRI?id=@Model.ProductId&cid=@Model.CatId');
-        });
+    
+    
     </script>
 }
 

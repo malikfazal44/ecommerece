@@ -2,11 +2,20 @@
 
 @{
     ViewData["Title"] = "Index";
+    var List = ViewBag.List;
 }
 
 <h1>Index</h1>
 
-<p>
+<div>
+    <h4>All
+        <span id="viewCounter" class="badge bg-info d-flex justify-content-center">
+            @List 
+        </span>
+    </h4>
+</div>
+
+<p class="d-flex justify-content-end">
     
         <a asp-action="Create" class="btn btn-success">Create New</a>
     
@@ -15,7 +24,7 @@
 <table id="producttable" class="table ">
     <thead>
         <tr>
-            <th>
+            <th >
                 Image
             </th>
             <th>
@@ -62,7 +71,7 @@
                         <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
                     }
                 </td>
-            <td>
+                <td class="hoverajax" data-p_id=@item.ProductId>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
@@ -96,10 +105,13 @@
                 @Html.DisplayFor(modelItem => item.DeliveryCharges)
             </td>
             
+            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-dark btn-sm">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.ProductId" class=" btn btn-sm btn-info">Details</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>*@
+                    @*<a href="#" class="productdelete btn btn-sm btn-danger" data-prodid=@item.ProductId>Delete</a>*@
+                    <button class="delete-btn btn btn-danger" data-product-id=@item.ProductId>Delete</button>
             </td>
         </tr>
 }
@@ -112,5 +124,39 @@
             $(document).ready(function () {
                 $('#producttable').DataTable();
             });
+
+               
+
+
+            
+
+
+
+
+        // ajax json function started here for deleting while styaing on page
+        $('.delete-btn').click(function () {
+            var prod_id = $(this).data('product-id');
+            var row = $(this).parent().parent();
+            
+
+
+            
+
+            $.ajax({
+                url:'/Products/DeleteBtn',
+                type: 'post',
+                data: {
+                    id: prod_id
+                },
+                success: function (response) {
+                    row.fadeOut(1500);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                },
+            });
+        });
+
+
         </script>
 }

@@ -19,50 +19,51 @@
                 <span asp-validation-for="CatName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CatDesc" class="control-label">Category Description</label>
+                <label asp-for="CatDesc" class="control-label">Description</label>
                 <input asp-for="CatDesc" class="form-control" />
                 <span asp-validation-for="CatDesc" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="CatStatus" class="control-label"></label>
-                <input asp-for="CatStatus" class="form-control" />
-                <span asp-validation-for="CatStatus" class="text-danger"></span>
+            <label asp-for="CatStatus" class="control-label"></label>
+            <input asp-for="CatStatus" class="form-control" />
+            <span asp-validation-for="CatStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MetaData" class="control-label"></label>
-                <input asp-for="MetaData" class="form-control" />
-                <span asp-validation-for="MetaData" class="text-danger"></span>
+            <label asp-for="MetaData" class="control-label"></label>
+            <input asp-for="MetaData" class="form-control" />
+            <span asp-validation-for="MetaData" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SeoData" class="control-label"></label>
-                <input asp-for="SeoData" class="form-control" />
-                <span asp-validation-for="SeoData" class="text-danger"></span>
+            <label asp-for="SeoData" class="control-label"></label>
+            <input asp-for="SeoData" class="form-control" />
+            <span asp-validation-for="SeoData" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            <label asp-for="CreatedBy" class="control-label"></label>
+            <input asp-for="CreatedBy" class="form-control" />
+            <span asp-validation-for="CreatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            <label asp-for="CreatedDate" class="control-label"></label>
+            <input asp-for="CreatedDate" class="form-control" />
+            <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+            <label asp-for="ModifiedBy" class="control-label"></label>
+            <input asp-for="ModifiedBy" class="form-control" />
+            <span asp-validation-for="ModifiedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            <label asp-for="ModifiedDate" class="control-label"></label>
+            <input asp-for="ModifiedDate" class="form-control" />
+            <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="CatImage" class="control-label">Category Image</label>
-                <input asp-for="CatImage" type="file" class="form-control" />
+                <label asp-for="CatImage" class="control-label">Image</label>
+                <input id="Catimg" name="Catimg" type="file" class="form-control" />
                 <span asp-validation-for="CatImage" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

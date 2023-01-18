@@ -359,6 +359,8 @@ namespace ecommerece.Models
                     .HasColumnType("datetime")
                     .HasColumnName("modified_date");
 
+                entity.Property(e => e.NumOfViews).HasColumnName("num_of_views");
+
                 entity.Property(e => e.ProductImg)
                     .HasMaxLength(1500)
                     .HasColumnName("product_img");

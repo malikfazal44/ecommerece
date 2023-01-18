@@ -1,0 +1,156 @@
+﻿@model IEnumerable<ecommerece.Models.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p class="d-flex justify-content-end">
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table id="custid" class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.CustName)*@
+                Name
+            </th>
+            <th>
+               @* @Html.DisplayNameFor(model => model.CustPhone)*@
+               Mobile Number
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.CustEmail)*@
+                Email
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.CustAddress)*@
+                Address
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.CustCity)
+            </th>*@
+            <th>
+                Date of Birth
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.SystemUserId)
+            </th>*@
+            <th>
+                Gender
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.CustStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MetaData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>*@
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+                <td>
+                    
+                    <img src="@item.CustImg" class=" img-thumbnail" style="max-height: 100px" />
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustAddress)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.CustCity)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CustDob)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.SystemUserId)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.CustGender)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.CustStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MetaData)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>*@
+            
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CustId" class="btn btn-primary">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CustId" class="btn btn-info">Details</a> |
+                    @*<a asp-action="Delete" asp-route-id="@item.CustId" class="btn btn-danger">Delete</a>*@
+                    @*<a href="#" data-Cid=@item.CustId class="btn btn-danger delete-btn">Delete</a>*@
+                    <button class="delete-btn btn btn-danger" data-customer-id=@item.CustId>Delete</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        // add datatable inside table
+        $(document).ready(function(){
+            $('#custid').DataTable();
+        });
+
+        $('.delete-btn').click(function () {
+            var Custid = $(this).data('customer-id');
+
+            // alert(Custid);
+           $.ajax({
+                url: '/customers/DeleteAjax',
+               type: 'post',
+               data:{
+                   id: Custid
+               },
+                success: function (response) {
+                    row.fadeOut(1500);
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+           });
+        });
+    </script>
+}

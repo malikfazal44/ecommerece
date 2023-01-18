@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ecommerece.Models
 {
     public partial class Product
     {
         public int ProductId { get; set; }
+        [Required]
         public string? ProductName { get; set; }
         public int SellerId { get; set; }
         public int? DeliveryDays { get; set; }
@@ -22,6 +24,8 @@ namespace ecommerece.Models
         public DateTime? CreatedDate { get; set; }
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        [Required]
         public string? ProductImg { get; set; }
+        public int NumOfViews { get; set; }
     }
 }

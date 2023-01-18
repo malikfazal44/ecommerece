@@ -18,7 +18,7 @@
                 <span asp-validation-for="CatName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CatDesc" class="control-label">Category Description</label>
+                <label asp-for="CatDesc" class="control-label">Description</label>
                 <input asp-for="CatDesc" class="form-control" />
                 <span asp-validation-for="CatDesc" class="text-danger"></span>
             </div>
@@ -58,10 +58,11 @@
                 <span asp-validation-for="ModifiedDate" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="CatImage" class="control-label">Category Image</label>
-                <input id="catPic" name="catPic" type="file" class="form-control" />
+                <label asp-for="CatImage" class="control-label">Image</label>
+                <input id="Catimg" name="Catimg" type="file" class="form-control" />
                 <span asp-validation-for="CatImage" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

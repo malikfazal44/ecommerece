@@ -1,4 +1,4 @@
-﻿@model ecommerece.Models.staff
+﻿@model ecommerece.Models.Customer
 
 @{
     ViewData["Title"] = "Details";
@@ -6,69 +6,74 @@
 
 <div class="row">
     <div class="col-6">
-        <img src="@Model.StaffImage" alt="@Model.StaffName" class="rounded" />
+        <img src="@Model.CustImg" class="rounded" />
     </div>
     <div class="col-6">
         <h1>Details</h1>
 
         <div>
-            <h4>staff</h4>
+            <h4>Customer</h4>
             <hr />
             <dl class="row">
-                
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StaffName)
+                    <strong>Name</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.StaffName)
+                    @Html.DisplayFor(model => model.CustName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StaffPhone)
+                    <strong>Mobile No</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.StaffPhone)
+                    @Html.DisplayFor(model => model.CustPhone)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StaffEmail)
+                    <strong>Email</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.StaffEmail)
+                    @Html.DisplayFor(model => model.CustEmail)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.City)
+                    <strong>Address</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.City)
+                    @Html.DisplayFor(model => model.CustAddress)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StaffAddress)
+                    <strong>City</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.StaffAddress)
+                    <select class="form-label" asp-for="CustCity" disabled>
+                        <option value="">---Select your City---</option>
+                        <option value="1">Sialkot</option>
+                        <option value="2">Lahore</option>
+                        <option value="3">Islamabad</option>
+                        <option value="4">Karachi</option>
+                    </select>
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StaffDob)
+                    <strong>Date of Birth</strong>
                 </dt>
                 <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.StaffDob)
+                    @Html.DisplayFor(model => model.CustDob)
                 </dd>
                 @*<dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.SystemUserId)
                 </dt>
                 <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.SystemUserId)
+                </dd>*@
+                <dt class="col-sm-2">
+                    <strong>Gender</strong>
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CustGender)
                 </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Role)
+                @*<dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.CustStatus)
                 </dt>
                 <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Role)
-                </dd>
-                <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Status)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Status)
+                @Html.DisplayFor(model => model.CustStatus)
                 </dd>
                 <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.MetaData)
@@ -100,14 +105,16 @@
                 <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.ModifiedDate)
                 </dd>*@
-
+                
+                
             </dl>
         </div>
         <div>
-            <a asp-action="Edit" asp-route-id="@Model?.StaffId">Edit</a> |
+            <a asp-action="Edit" asp-route-id="@Model?.CustId">Edit</a> |
             <a asp-action="Index">Back to List</a>
         </div>
     </div>
 </div>
+
 
 

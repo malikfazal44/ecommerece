@@ -25,9 +25,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\data\img\catpic\" />
+    <Folder Include="wwwroot\data\img\custimg\" />
     <Folder Include="wwwroot\data\img\sellerpp\" />
     <Folder Include="wwwroot\data\img\products\" />
     <Folder Include="wwwroot\lib\fontawesome\" />
+    <Folder Include="wwwroot\lib\jquery-ui\" />
   </ItemGroup>
 
 </Project>

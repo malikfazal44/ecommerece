@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ecommerece.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace ecommerece.Controllers
 {
@@ -69,6 +71,42 @@ namespace ecommerece.Controllers
                 seller.SellerImg = FinalPath;
                 _context.Add(seller);
                 await _context.SaveChangesAsync();
+
+                // send email to new user
+
+                if (!string.IsNullOrEmpty(seller.SellerEmail))
+                {
+                    MailMessage oEmail = new MailMessage();
+                    oEmail.Subject = "Dear <b>"+ seller.SellerName +"<b>, Welcome to Theta Ecommerce.";
+                    oEmail.Body = "Dear "+ seller.SellerName +" welcome to our Theta eShop." +
+                        "You are our precious customer. Feel free to do shoping with us. Best of luck";
+                    oEmail.To.Add(seller.SellerEmail);
+                    oEmail.CC.Add("malikfazal44@hotmail.com");
+                    oEmail.Bcc.Add("malikfazal44@gmail.com");
+
+
+                    oEmail.From = new MailAddress("malikfazal44@hotmail.com", "Theta soltuions");
+                    oEmail.Attachments.Add(new Attachment(_img.WebRootPath + seller.SellerImg));
+
+                    SmtpClient oSMTP = new SmtpClient();
+                    oSMTP.Port = 465;
+                    oSMTP.Host = "mail.thetademos.com";
+                    oSMTP.Credentials = new NetworkCredential("students@thetademos.com", "P@kist@n@@123");
+                    oSMTP.EnableSsl = true;
+
+                    try
+                    {
+                        oSMTP.Send(oEmail);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                    
+
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(seller);
