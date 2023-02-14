@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ecommerece.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace ecommerece.Controllers
 {
@@ -57,7 +59,7 @@ namespace ecommerece.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CustId,CustName,CustPhone,CustEmail,CustAddress,CustCity,CustDob,SystemUserId,CustGender,CustStatus,MetaData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,CustImg")] 
-        Customer customer, IFormFile custimg)
+        Customer customer, IFormFile custimg,string username,string password)
         {
 
 
@@ -70,10 +72,51 @@ namespace ecommerece.Controllers
 
             if (ModelState.IsValid)
             {
+                // add username & password to useradmin table and userID to useradmin & customer
+                UserAdmin user = new UserAdmin();
+                user.UserName = username;
+                user.Password = password;
+                user.Type = 4;
+                _context.UserAdmins.Add(user);
+                await _context.SaveChangesAsync();
+                // get user id and assign this id inside customer table
+                var GetUserId = _context.UserAdmins.Where(u => u.UserName == username).FirstOrDefault();
+
+                customer.SystemUserId = GetUserId.UserId;
                 customer.CustImg = FinalPath;
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                // after creation of customer sending him welcoming email
+                if (!string.IsNullOrEmpty(customer.CustEmail))
+                {
+                    MailMessage oEmail = new MailMessage();
+                    oEmail.Subject = "Dear <b>" + customer.CustName +"</b>, Welcome to Our Estore";
+                    oEmail.Body = "Dear <b>" + customer.CustName + "</b>, welcome to Theta Estore." +
+                        "You are very precious to us. feel free to do shopping with us. best of luck.";
+                    oEmail.To.Add(customer.CustEmail);
+                    oEmail.CC.Add("malikfazal44@hotmail.com");
+                    oEmail.Bcc.Add("malikfazal44@hotmail.com");
+
+                    oEmail.From = new MailAddress("malikfaza44@gmail.com", "Theta Ecommerce");
+                    oEmail.Attachments.Add(new Attachment(_img.WebRootPath+customer.CustImg));
+
+                    SmtpClient oSMTP = new SmtpClient();
+                    oSMTP.Port = 465;
+                    oSMTP.Host = "mail.thetademos.com";
+                    oSMTP.Credentials = new NetworkCredential("students@thetademos.com", "P@kist@n@@123");
+                    oSMTP.EnableSsl = true;
+                    try
+                    {
+                        oSMTP.Send(oEmail);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                return RedirectToAction("SuccessfulCreation","Home");
             }
             return View(customer);
         }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ecommerece.Models;
+using System.Net.Mail;
 
 namespace ecommerece.Controllers
 {
@@ -18,9 +19,73 @@ namespace ecommerece.Controllers
             _context = context;
         }
 
+        // Login to system
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(UserAdmin user)
+        {
+            UserAdmin Found = _context.UserAdmins.Where(oUser => oUser.UserName == user.UserName && oUser.Password == user.Password).FirstOrDefault();
+            if (Found == null)
+            {
+                ViewBag.Error = "Incorrect Username or Password";
+                return View();
+            }
+
+            //if successfull login
+            HttpContext.Session.SetString("UserName", Found.UserName);
+            HttpContext.Session.SetInt32("UserId", Found.UserId);
+            HttpContext.Session.SetInt32("type", Found.Type.Value);
+            return RedirectToAction("Index", "Products");
+        }
+        // forgot password action
+        public IActionResult ForgotPassword(string forgotpassword, UserAdmin useradmin)
+        {
+            var Find_Userid = _context.UserAdmins.Where(uName => uName.UserName == forgotpassword).FirstOrDefault();
+            if(Find_Userid.Type == 3)
+            {
+                var Find_seller = _context.Sellers.Where(s => s.SystemUserId == Find_Userid.UserId).FirstOrDefault();
+
+                // generate reset link
+                string resetToken = Guid.NewGuid().ToString();
+                useradmin.Token = resetToken;
+                _context.Add(useradmin);
+                _context.SaveChanges();
+                // useradmin.Timestamp = DateTime.UtcNow();
+                // send reset link to registered mail address
+                if (!string.IsNullOrEmpty(Find_seller.SellerEmail))
+                {
+                    MailMessage resetMail = new MailMessage();
+                    resetMail.Subject = "Reset Your Password";
+                    resetMail.Body = "Dear <b>" + useradmin.UserName + "</b> click the following " +
+                        "link to reset your password. <br />" +
+                        "<a href=''>" + resetToken + "</a>";
+                }
+                
+            }
+            return View();
+        }
+
+        // password reset page
+        public IActionResult PasswordReset()
+        {
+            return View();
+        }
+
+        //Logout 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login","UserAdmins");
+        }
+
         // GET: UserAdmins
         public async Task<IActionResult> Index()
         {
+
               return View(await _context.UserAdmins.ToListAsync());
         }
 
@@ -59,7 +124,7 @@ namespace ecommerece.Controllers
             {
                 _context.Add(userAdmin);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Login));
             }
             return View(userAdmin);
         }

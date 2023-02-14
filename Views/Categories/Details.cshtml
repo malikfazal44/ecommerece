@@ -71,9 +71,12 @@
                 
             </dl>
         </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model?.CatId">Edit</a> |
-            <a asp-action="Index">Back to List</a>
+        <div class="text-nowrap">
+            @if (Context.Session.GetInt32("type") == 1 || Context.Session.GetInt32("type") == 2)
+            {
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model?.CatId">Edit</a>
+            } 
+            <a class="btn btn-warning" asp-action="Index">Back to List</a>
         </div>
     </div>
 </div>

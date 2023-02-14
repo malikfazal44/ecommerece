@@ -3,9 +3,61 @@
 @{
     ViewData["Title"] = "Index";
     var List = ViewBag.List;
+    var Product_cards = ViewBag.Product_cards;
 }
+<style>
+    /* tour card css */
 
-<h1>Index</h1>
+    .sale-card {
+        width: 30%;
+        margin: auto;
+        margin-top: 30px;
+    }
+
+    .card {
+        margin-right: 25px;
+    }
+
+    .card-sticker span {
+        background-color: rgb(8, 168, 168);
+        color: white;
+        padding: 5px;
+        border: 1px solid transparent;
+        border-radius: 50px;
+        position: absolute;
+        top: -15px;
+        right: -15px;
+    }
+
+    .discount-list span {
+        background-color: rgb(237 100 100);
+        color: white;
+        padding: 4px;
+        position: relative;
+        top: -40px;
+    }
+
+    .text-muted {
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+    }
+
+    .card:hover {
+        position: relative;
+        -webkit-box-shadow: 0 20px 40px rgba(72, 78, 85, .6);
+        box-shadow: 0 20px 40px rgba(72, 78, 85, .6);
+        -webkit-transform: translateY(-7px);
+        -moz-transform: translateY(-7px);
+        -ms-transform: translateY(-7px);
+        -o-transform: translateY(-7px);
+        transform: translateY(-7px);
+    }
+
+    /* tour card css ends here  */
+</style>
+
+<h1>Products</h1>
 
 <div class="d-flex justify-content-center">
     <h4>All
@@ -14,109 +66,153 @@
         </span>
     </h4>
 </div>
-
-<p class="d-flex justify-content-end">
+@if (Context.Session.GetInt32("type") == 3)
+{
+    <p class="d-flex justify-content-end">
     
         <a asp-action="Create" class="btn btn-success">Create New</a>
     
     
 </p>
-<table id="producttable" class="table ">
-    <thead>
-        <tr>
-            <th >
-                Image
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Category
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                About
-            </th>
-            @*<th>
-                Description
+}
+@if (Context.Session.GetInt32("type") == 3){
+    <table id="producttable" class="table ">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    About
+                </th>
+                @*<th>
+            Description
             </th>*@
-            <th>
-                Price
-            </th>
-            <th>
-                Delivery Days
-            </th>
-            <th>
-                Delivery Charges
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-                <td>
-                    @{
-                        var separated = item.ProductImg.Split(",");
-                    }
-                    @if (string.IsNullOrEmpty(separated[0]))
-                    {
+                <th>
+                    Price
+                </th>
 
-                    }
-                    else
-                    {
-                        <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
-                    }
-                </td>
-                <td class="hoverajax" data-p_id=@item.ProductId>
-                @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CatId)
-                @*@{
-                        var Categories = ViewBag.Categories;
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (Context.Session.GetInt32("type") == 3 && item.SellerId == Context.Session.GetInt32("UserId"))
+                {
+                    <tr>
+                        <td>
+                            @{
+                                var separated = item.ProductImg.Split(",");
+                            }
+                            @if (string.IsNullOrEmpty(separated[0]))
+                            {
+
+                            }
+                            else
+                            {
+                                <img src="@separated[0]" class="img img-thumbnail" style="max-height : 100px;" />
+                            }
+                        </td>
+                        <td class="hoverajax" data-p_id=@item.ProductId>
+                            @Html.DisplayFor(modelItem => item.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CatId)
+                            @*@{
+                var Categories = ViewBag.Categories;
                 }
                 <select asp-for="CatId" class="form-label" disabled>
-                        @foreach (Category P in Categories)
-                    {
-                        <option value="@P.CatId">@P.CatName</option>
-                    }
-                    </select>*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortDecsc)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.LongDesc)
+                @foreach (Category P in Categories)
+                {
+                <option value="@P.CatId">@P.CatName</option>
+                }
+                </select>*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ShortDecsc)
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.LongDesc)
             </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductPrice)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryDays)
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryCharges)
-            </td>
-            
-            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-dark btn-sm">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId" class=" btn btn-sm btn-info">Details</a> |
-                @*<a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>*@
-                    @*<a href="#" class="productdelete btn btn-sm btn-danger" data-prodid=@item.ProductId>Delete</a>*@
-                    <button class="delete-btn btn btn-danger" data-product-id=@item.ProductId>Delete</button>
-            </td>
-        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductPrice)
+                        </td>
+
+
+
+                        <td class="text-nowrap">
+                            @if (Context.Session.GetInt32("type") == 3 && item.SellerId == Context.Session.GetInt32("UserId"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-primary btn-sm">Edit</a>
+                            }
+
+                            <a asp-action="Details" asp-route-id="@item.ProductId" class=" btn btn-sm btn-info"><i class="bi bi-info-circle"></i>Details</a>
+                            @*<a asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>*@
+                            @*<a href="#" class="productdelete btn btn-sm btn-danger" data-prodid=@item.ProductId>Delete</a>*@
+                            @if (Context.Session.GetInt32("type") == 3 && item.SellerId == Context.Session.GetInt32("UserId") || Context.Session.GetInt32("type") == 2 || Context.Session.GetInt32("type") == 1)
+                            {
+
+                                <button class="delete-btn btn btn-danger" data-product-id=@item.ProductId>Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else if (string.IsNullOrEmpty(Context.Session.GetString("UserName")) || Context.Session.GetInt32("type") == 4){
+    <div class="row">
+    @foreach (var card in Product_cards)
+    {
+        
+        <div class="sale-card">
+            <div class="card-group">
+                <div class="card">
+                    @{
+                        string[] Product_Images = card.ProductImg.Split(",");
+                        if (string.IsNullOrEmpty(Product_Images[0]))
+                        {
+                            <a href="/Products/Details?id=@card.ProductId"><img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 225px;" class="card-img-top" /></a>
+                        }
+                        else
+                        {
+                            <a href="/Products/Details?id=@card.ProductId"><img src="@Product_Images[0]" style="max-height: 225px;" class="card-img-top" /></a>
+                        }
+                    }
+
+
+                    <div class="discount-list"><span><b> @card.ProductPrice</b> Rs</span></div>
+                    <div class="card-body">
+                        <h4 class="card-title">@card.ShortDecsc</h4>
+                        <p class="card-text">@card.LongDesc</p>
+                        <p class="card-text"><small class="text-muted">Delivery in @card.DeliveryDays days</small></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    }
+    </div>
+}
+
 
 
 @section Scripts{

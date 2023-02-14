@@ -12,14 +12,15 @@
                 }
                 @if (string.IsNullOrEmpty(AllImages[0]))
                 {
+                    <img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 500px;" />
 
                 }
                 else
                 {
-                
-                <img src="@AllImages[0]" class="img img-fluid largeImg" style="max-height : 500px;" />
+
+                    <img src="@AllImages[0]" class="img img-fluid largeImg" style="max-height : 500px;" />
                 }
-                    
+
             </div>
         </div>
         <div class="row">
@@ -30,107 +31,101 @@
                 }
             </div>
         </div>
-        
-        
+
+
     </div>
-<div class="col-6">
-        <h1>Details</h1>
-
+    <div class="col-6">
         <div>
-            <h4 class="">Product</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    Name
-                    
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ProductName)
-                    <span id="viewCounter" class="badge bg-info"></span>
-                    
-                </dd>
-                @*<dt class="col-sm-2">
-                    Views
-
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.NumOfViews)
-
-                </dd>*@
-                @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.SellerId)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.SellerId)
-                </dd>*@
-                
-                @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CatId)
-                </dt>
-                <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CatId)
-                </dd>*@
-                <dt class="col-sm-2">
-                    Stock
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Quantity)
-                </dd>
-                <dt class="col-sm-2">
-                    About
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ShortDecsc)
-                </dd>
-                <dt class="col-sm-2">
-                    Description
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.LongDesc)
-                </dd>
-                <dt class="col-sm-2">
-                    Price
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ProductPrice)
-                </dd>
-                <dt class="col-sm-2">
-                    Delivery Days
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.DeliveryDays)
-                </dd>
-                <dt class="col-sm-2">
-                    Delivery Charges
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.DeliveryCharges)
-                </dd>
-                @*<dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Status)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Status)
-                </dd>*@
-               
-                
-            </dl>
+            <h1 id="h1" class="">@Model.ShortDecsc</h1>
+            <div class="row">
+                <div class="col-6">
+                    <h3>@Model.ProductPrice Rs</h3><br />
+                    <div>
+                        <label for="quantity" class="">Quantity</label><br />
+                        <input type="number" id="quantity" min="1" value="1" />
+                    </div> <br />
+                    <div>
+                        <button id="addToCart" data-name="@Model.ProductName" data-id="@Model.ProductId" data-price="@Model.ProductPrice" class="btn btn-primary cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
-            <a asp-action="Index">Back to List</a>
-        </div>
-</div>
+        @*<div>
+        <h4 class="">Product</h4>
+        <hr />
+        <dl class="row">
+        <dt class="col-sm-2">
+        Name
+
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ProductName)
+        @if (Model.SellerId == Context.Session.GetInt32("UserId"))
+        {
+        <span id="viewCounter" class="badge bg-info"></span>
+        }
+
+        </dd>
+        <dt class="col-sm-2">
+        Stock
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt class="col-sm-2">
+        About
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ShortDecsc)
+        </dd>
+        <dt class="col-sm-2">
+        Description
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.LongDesc)
+        </dd>
+        <dt class="col-sm-2">
+        Price
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.ProductPrice)
+        </dd>
+        <dt class="col-sm-2">
+        Delivery Days
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DeliveryDays)
+        </dd>
+        <dt class="col-sm-2">
+        Delivery Charges
+        </dt>
+        <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.DeliveryCharges)
+        </dd>
+
+
+        </dl>
+        </div>*@
+        @*<div class="text-nowrap">
+        @if (Model.SellerId == Context.Session.GetInt32("UserId"))
+        {
+        <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a>
+        }
+
+        <a class="btn btn-danger" asp-action="Index">Back to List</a>
+        </div>*@
+    </div>
+
 </div>
 
 <div id="RI" class="row">
-    
 </div>
 
 @section Scripts{
     <script>
 
-        $(function () {
+        $(document).ready(function () {
+            // select thumbnail images
             $(".smallImg").click(function () {
 
                 var clickedImage = $(this);
@@ -138,27 +133,76 @@
 
                 $(".largeImg").attr("src", clickedImage.attr("src"));
             });
-        @*Ajax code starts. it prevents to load in DOM.*@
 
-                $(function () {
-                    //$('#counter').load('/Products/NumOfViews?id=@Model.ProductId');
-                    $('#RI').load('/Products/GetRI?id=@Model.ProductId&cid=@Model.CatId');
-                });
-                $(function (){
+            //add to cart flow
+            $("#addToCart").click(function () {
+                var cart = [];
+                //var name = $(this).data('name');
+                //var price = $(this).data('price');
+                var id = $(this).data('id');
+
+                var id = $(this).data('id');
+                var quantity = parseInt($('#quantity').val());
+                let cartItems = { productId: id, quantity: quantity }
+
+                var data = localStorage.getItem('CartItems');
+                if (data != null && data != '' && data != "undefined") {
+                    cart = JSON.parse(data);
+                    //checking if product already exist
+                    if (cart.some(item => item.productId === cartItems.productId)) {
+                        alert("This product is already in your cart!");
+                    } else {
+                        cart.push(cartItems);
+                    }
+
+
+                }
+                else {
+
+                    cart.push(cartItems);
+                }
+
+
+                // Convert the cart array to a string
+                let cartData = JSON.stringify(cart);
+                localStorage.setItem("CartItems", cartData);
+                localStorage.setItem("CartLength", cart.length);
+
+                $('#cart-in-nav').html(localStorage.getItem("CartLength"));
+                //console.log(cart.length);
+
+                //disable the button after adding product to cart
+                //$("#addToCart[data-id='" + id + "']").prop("disabled", true);
+
+
+            });
+
+
+
+
+
+            //Ajax code starts. it prevents to load in DOM.
+
+            $(function () {
+                //$('#counter').load('/Products/NumOfViews?id=@Model.ProductId');
+                $('#RI').load('/Products/GetRI?id=@Model.ProductId&cid=@Model.CatId');
+            });
+            $(function () {
                 $('#viewCounter').load('/Products/NumOfViews?id=@Model.ProductId');
-                });
+            });
 
 
             $.ajax({
                 url: '/Products/GetCounter',
-                type: 'post' ,
+                type: 'post',
                 data: {
                     id: '@Model.ProductId'
                 }
             });
+
         });
-    
-    
+
+
     </script>
 }
 

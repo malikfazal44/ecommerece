@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ecommerece.Models;
+using ecommerece.Models.ViewModels;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ecommerece.Controllers
 {
@@ -41,6 +44,46 @@ namespace ecommerece.Controllers
 
             return View(order);
         }
+
+        [HttpGet]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+        //checkout 
+        [HttpPost]
+        public string CheckoutItems(string cart)
+        {
+            List<OrderItems> orderItems = JsonConvert.DeserializeObject<List<OrderItems>>(cart);
+            string FinalCart = "";
+            decimal Total = 0;
+            foreach (var items in orderItems)
+            {
+
+                var Product = _context.Products.FirstOrDefault(i => i.ProductId == items.productId);
+                var separate = Product.ProductImg.Split(',');
+                FinalCart += "          <li class='list-group-item d-flex justify-content-between lh-sm'>" +
+                    "            <div>" +
+                    "                <img class = 'img img-thumbnail' src = '" + separate[0] + "' style = 'max-height:50px; max-width: 50px;' " +
+                    "              <h6 class='my-0'>" + Product.ProductName + "</h6><br/>" +
+                    "              <small class='text-muted'>" + Product.ShortDecsc + "</small>" +
+                    "               <div class='qty-div'>" +
+                    "                   <button class='qty-decrese' style='background:none; border:none; max-width:100px'>-</button>" +
+                    "                   <span><input class='qty-counter' style='display:block; background:none; border:none' name='update[]' type='text' value='1' /></span>" +
+                    "                   <button data-productId="+ items.productId +" class='qty-increase' style='background:none; border:none'>+</button>" +
+                    "               </div>" +
+                    "            </div>" +
+                    "            <span class='text-muted'>" + Product.ProductPrice + "</span>" +
+                    "          </li>";
+                Total += Product.ProductPrice ?? 0 * items.quantity;
+            }
+            FinalCart += "<li class='list-group-item d-flex justify-content-between'>" +
+                "            <span>Total (USD)</span>" +
+                "            <strong>" + Total + "PKR</strong>" +
+                "          </li>";
+            return FinalCart;
+        }
+
 
         // GET: Orders/Create
         public IActionResult Create()

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var List = ViewBag.CatList;
 }
 
 <h1>Edit</h1>
@@ -21,13 +22,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="CatId" class="control-label">Product Category</label>
-                @{
-                    var List = ViewBag.CatList;
-                }
+                
                 <select asp-for="CatId" class="form-control">
-                    @foreach (Category list in List)
+                    <option selected>Select Category</option>
+                    @foreach (Category l in List)
                     {
-                        <option value="@list.CatId">@list.CatName</option>
+                        <option value="@l.CatId">@l.CatName</option>
                     }
                 </select>
                 <span asp-validation-for="CatId" class="text-danger"></span>

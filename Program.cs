@@ -18,6 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<ecomereceContext>(options =>
     options.UseSqlServer(MYDBCSVAR));
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -46,10 +49,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

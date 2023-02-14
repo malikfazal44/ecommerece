@@ -4,163 +4,132 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Customer</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CustName" class="control-label">Name</label>
-                <input asp-for="CustName" class="form-control" />
-                <span asp-validation-for="CustName" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="CustPhone" class="control-label">Mobile Number</label>
-                <input asp-for="CustPhone" type="tel" class="form-control" />
-                <span asp-validation-for="CustPhone" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="CustEmail" class="control-label">Email</label>
-                <input asp-for="CustEmail" class="form-control" />
-                <span asp-validation-for="CustEmail" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="CustAddress" class="control-label">Address</label>
-                <input asp-for="CustAddress" class="form-control" />
-                <span asp-validation-for="CustAddress" class="text-danger"></span>
-            </div><br />
-            <div class="form-group">
-                <label asp-for="CustCity" class="control-label">City</label>
-                @*<input asp-for="CustCity" class="form-control" />*@
-                @*<select class="form-control" asp-for="CustCity">
-                    <option value="">---Select your City---</option>
-                    <option value="1">Sialkot</option>
-                    <option value="2">Lahore</option>
-                    <option value="3">Islamabad</option>
-                    <option value="4">Karachi</option>
-                </select>*@
-                <!-- First select element -->
-                <select id="city" class="form-control" asp-for="CustCity">
-                    <option value="Sialkot">Sialkot</option>
-                    <option value="Gujranwala">Gujranwala</option>
-                    <option value="Narowal">Narowal</option>
-                </select>
-
-                <!-- Second select element (initially hidden) -->
-                <select id="tehsil"></select>
-
-                <span asp-validation-for="CustCity" class="text-danger"></span>
-            </div><br />
-            @*<div class="form-group">
-                <label asp-for="SystemUserId" class="control-label"></label>
-                <input asp-for="SystemUserId" class="form-control" />
-                <span asp-validation-for="SystemUserId" class="text-danger"></span>
-            </div>*@
-            
-            <div class="form-group">
-                <label asp-for="CustGender" class="control-label">Gender</label>
-                <br />
-                <br />
-                @*<input asp-for="CustGender" class="form-control" />*@
-                <div class="form-check form-check-inline">
-                    <input asp-for="CustGender" class="form-check-input" type="radio" name="gender" id="Male" value="option1">
-                    <label asp-for="CustGender" class="form-check-label" for="inlineRadio1">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input asp-for="CustGender" class="form-check-input" type="radio" name="gender" id="Female" value="option2">
-                    <labe asp-for="CustGender" l class="form-check-label" for="inlineRadio2">Female</labe>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input asp-for="CustGender" class="form-check-input" type="radio" name="gender" id="Other" value="option3" >
-                    <label asp-for="CustGender" class="form-check-label" for="inlineRadio3">Other</label>
-                </div>
-                <br />
-                <span asp-validation-for="CustGender" class="text-danger"></span>
-            </div>
-            <br />
-            @*<div class="form-group">
-                <label asp-for="CustStatus" class="control-label"></label>
-                <input asp-for="CustStatus" class="form-control" />
-                <span asp-validation-for="CustStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetaData" class="control-label"></label>
-                <input asp-for="MetaData" class="form-control" />
-                <span asp-validation-for="MetaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="CustImg" class="control-label">Image</label>
-                @*<input asp-for="CustImg" class="form-control" />*@
-                <input type="file" id="custimg" name="custimg" class="form-control" />
-                <span asp-validation-for="CustImg" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group d-flex justify-content-end" style="position: relative;
-  top: 39px;">
-                <input type="submit" value="Create" class=" btn btn-success" />
-            </div>
-        </form>
+    <div class="col-6">
+        <img src="/data/img/placholdimage/signupgify.gif" class="img img-fluid" />"
     </div>
-</div>
+    <div class="col-6">
+        <h1>Sign Up <br /> </h1>
+        <h3>for Customer</h3>
 
-<div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        
+        <hr />
+        <div class="row">
+
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input  class="form-control" id="username" name="username" placeholder="name@example.com">
+                            <label for="username">Username</label>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input class="form-control" type="password" id="password" name="password" placeholder="name@example.com" />
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="name@example.com" />
+                            <label for="confirm_password">Confirm Password</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input asp-for="CustName" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="CustName">Full Name</label>
+                            <span asp-validation-for="CustName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="email" asp-for="CustEmail" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="CustEmail">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input type="tel" asp-for="CustPhone" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="CustPhone">Mobile Phone</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <div class="form-check form-check-inline">
+                                <input asp-for="CustGender" class="form-check-input" type="radio" name="gender" id="Male" value="Male">
+                                <label asp-for="CustGender" class="form-check-label" for="inlineRadio1"><b>Male</b></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input asp-for="CustGender" class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+                                <label asp-for="CustGender" class="form-check-label" for="inlineRadio2"><b>Female</b></label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-control" asp-for="CustCity">
+                                <option selected>Select your City</option>
+                                <option value="1">Sialkot</option>
+                                <option value="2">Lahore</option>
+                                <option value="3">Islamabad</option>
+                                <option value="4">Karachi</option>
+                            </select>
+                            <span asp-validation-for="CustCity" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input asp-for="CustAddress" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="CustAddress">Address</label>
+                            <span asp-validation-for="CustAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="file" id="custimg" name="custimg" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="CustImg" class="control-label">Image</label>
+                            <span asp-validation-for="CustImg" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group d-flex justify-content-end" style="position: relative; top: 39px;">
+                    <input type="submit" value="Create" class=" btn btn-success" />
+                </div>
+            </form>
+                 
+            
+        </div>
+        
+
+        <div>
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
 
     <script>
-        // Get the first select element
-        var city = $('#city');
-
-        // Add an event listener for when the first select changes
-        city.on('change', function () {
-            // Get the selected value from the first select
-            var selectedValue = $(this).val();
-            // Clear the options of the second select
-            $('#tehsil').empty();
-
-            // Depending on the selected value of the first select,
-            // add different options to the second select
-            switch (selectedValue) {
-                case 'Sialkot':
-                    $('#tehsil').append('<option value="sialkot">Sialkot</option>');
-                    $('#tehsil').append('<option value="daska">Daska</option>');
-                    $('#tehsil').append('<option value="sambrial">Sambrial</option>');
-                    $('#tehsil').append('<option value="pasrur">Pasrur</option>');
-                    break;
-                case 'Gujranwala':
-                    $('#tehsil').append('<option value="gujranwalaCity">Gujranwala City</option>');
-                    $('#tehsil').append('<option value="gujranwalaSaddar">Gujranwala Saddar</option>');
-                    $('#tehsil').append('<option value="kamonki">Kamonki</option>');
-                    $('#tehsil').append('<option value="nowsheraVirkan">Nowshera Virkan</option>');
-                    break;
-                case 'Narowal':
-                    $('#tehsil').append('<option value="narowal">Narowal</option>');
-                    $('#tehsil').append('<option value="shakargarh">Shakargarh</option>');
-                    break;
-                default:
-                    $('#tehsil').append('<option value="">Please select an option</option>');
-            }
-        });
+        
 
     </script>
 

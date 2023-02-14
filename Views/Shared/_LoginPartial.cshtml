@@ -3,24 +3,37 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
+@if (!string.IsNullOrEmpty(Context.Session.GetString("UserName")))
 {
+        <li class="nav-item">
+            <a href="/Orders/Checkout" class="nav-link text-dark"><i class="bi bi-cart"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span></i></a>
+        </li>
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a  class="nav-link text-dark" href="/UserAdmins/Details/@Context.Session.GetString("UserId")" title="Manage">Hello @Context.Session.GetString("UserName")!</a>
     </li>
     <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
+            <a href="/UserAdmins/Logout" class="nav-link text-dark"> | Logout</a>
     </li>
 }
 else
 {
+        <li class="nav-item">
+            <a href="/Orders/Checkout" class="nav-link text-dark"><i class="bi bi-cart"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span> </i></a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Register
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/Customers/Create">Customer</a></li>
+                <li><a class="dropdown-item" href="/Sellers/Create">Seller</a></li>
+
+            </ul>
+        </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="nav-link text-dark" href="/UserAdmins/Login">Log in</a>
     </li>
 }
 </ul>
+
+

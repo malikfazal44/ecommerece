@@ -23,19 +23,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SellerName)
+                Image
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SellerPhone)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SellerEmail)
+                Mobile No
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SellerAddress)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
+                Address
+            </th>
+            <th>
+                Company Name
             </th>
             @*<th>
                 @Html.DisplayNameFor(model => model.WebsiteUrl)
@@ -44,7 +47,7 @@
                 @Html.DisplayNameFor(model => model.SellerCnic)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                City
             </th>
             @*<th>
                 @Html.DisplayNameFor(model => model.ShortDesc)
@@ -53,10 +56,10 @@
                 @Html.DisplayNameFor(model => model.LongDesc)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.SellerGender)
+                Gender
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SellerDob)
+                Date of Birth
             </th>
             @*<th>
                 @Html.DisplayNameFor(model => model.SystemUserId)
@@ -88,15 +91,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.SeoData)
             </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.SellerImg)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    <img src="@item.SellerImg" alt="" class="img-thumbnail" style="max-height: 100px" />
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SellerName)
             </td>
@@ -163,15 +167,45 @@
             <td>
                 @Html.DisplayFor(modelItem => item.SeoData)
             </td>*@
-            <td>
-                    <img src="@item.SellerImg" alt="" class="img-thumbnail" style="max-height: 100px" />
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SellerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SellerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SellerId">Delete</a>
+            
+            <td class="text-nowrap">
+                <a asp-action="Edit" asp-route-id="@item.SellerId" class="btn btn-primary btn-sm">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SellerId" class="btn btn-info btn-sm">Details</a> |
+                    @*<a asp-action="Delete" asp-route-id="@item.SellerId" class="btn btn-danger btn-sm">Delete</a>*@
+                    <button class="delete-btn btn btn-danger" data-seller-id=@item.SellerId>Delete</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            // ajax json function started here for deleting while styaing on page
+            $('.delete-btn').click(function () {
+                var seller_id = $(this).data('seller-id');
+                var row = $(this).parent().parent();
+                
+
+
+
+
+
+                $.ajax({
+                    url: '/Sellers/DeleteBtnSeller',
+                    type: 'post',
+                    data: {
+                        id: seller_id
+                    },
+                    success: function (response) {
+                        row.fadeOut(1500);
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    },
+                });
+            });
+        });
+    </script>
+}

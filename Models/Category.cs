@@ -16,5 +16,6 @@ namespace ecommerece.Models
         public string? ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public string? CatImage { get; set; }
+        public int? SystemUserId { get; set; }
     }
 }

@@ -8,7 +8,7 @@
     <link href="~/lib/jquery/zoom/easyzoom.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ecommerece.styles.css" asp-append-version="true" />
-    <link href="~/lib/fontawesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="~/lib/data-tables/jquery.datatables.min.css" rel="stylesheet" />
     
 </head>
@@ -23,32 +23,41 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sellers" asp-action="Index">Seller</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Staffs" asp-action="Index">Staff</a>
-                        </li>
-                        <li>
-                            <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Customers
+                        <li class="nav-item ">
+                            <a class="nav-link home" asp-controller="Home" asp-action="Index" id="navbarDropdown" role="button" aria-expanded="false">
+                                Home
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                <li><a class="dropdown-item" asp-controller="Customers" asp-action="Index">View</a></li>
-                                <li><a class="dropdown-item" asp-controller="Customers" asp-action="Create">Add New</a></li>
-                            </ul>
-                            </div>
+                            
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            
+                            <ul class="dropdown-menu" id="category_list" aria-labelledby="navbarDropdown">
+                            
+                            </ul>
+                           
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/Home/AboutUs" id="navbarDropdown" role="button"  aria-expanded="false">
+                                About us
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link " href="/Home/ContactUs" id="navbarDropdown" role="button"  aria-expanded="false">
+                                Contact Us
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="/Home/FAQs" id="navbarDropdown" role="button" aria-expanded="false">
+                                FAQs
+                            </a>
+                            
+                        </li>
+                        
                  
                     </ul>
                     <partial name="_LoginPartial" />
@@ -63,11 +72,40 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - ecommerece - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    @*<footer class="container border-top footer text-muted bg-dark">
+        <div class="col-4">
+            <h3>About Us</h3>
+            <ul>
+                
+                <li>One Shopping Point</li>
+                <li>Buy Everything You Want</li>
+                <li>Do Your Shopping at Single Platform</li>
+                <li>Best Ecommerce platform in Pakistan</li>
+            </ul>
+            
         </div>
-    </footer>
+        <div class="col-4">
+            <h3>Go to</h3>
+            <ul>
+                
+                <li><a href="#">Men</a></li>
+                <li><a href="#">Women</a></li>
+                <li><a href="#">Kids</a></li>
+                <li><a href="#">Home Appliences</a></li>
+            </ul>
+        </div>
+        <div class="col-4">
+            <h3>Contact Us</h3>
+            <ul>
+                
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Whatsapp</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Imo</a></li>
+            </ul>
+        </div>
+    </footer>*@
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/zoom/jquery-3.6.0.min.js"></script>
     <script src="~/lib/jquery/zoom/easyzoom.js"></script>
@@ -75,5 +113,40 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/data-tables/jquery.datatables.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        // get category list with ajax call
+        $(document).ready(function () {
+
+
+                        //add t cart icon length
+                        if (localStorage.getItem("CartLength") != 0) {
+                            $('#cart-in-nav').html(localStorage.getItem("CartLength"));
+                        }
+    
+
+            $.ajax({
+                type: 'GET',
+                url: '/Categories/GetCategoryList',
+                success: function (data) {
+                    
+                    $.each(data, function (index, category) {
+                        let li = "";
+                        li += "<li>";
+                        //console.log(index);
+                        //console.log(category);
+                        //alert(category[index].catId);
+                        //alert(data[index].catId);
+                        li += "<a href = '/Products/Index?cat_id=" + category.catId + "'>" + category.catName + "</a>";
+                        li += "</li>";
+                        $('#category_list').append(li);
+                    });
+                    //alert(li);
+                }
+            });
+
+            
+
+        });
+    </script>
 </body>
 </html>

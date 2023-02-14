@@ -23,11 +23,23 @@ namespace ecommerece.Controllers
         }
 
         // GET: Products
-        public IActionResult Index()
+        public IActionResult Index(int cat_id)
         {
+            
             ViewBag.List = _context.Products.ToList().Count();
-            ViewBag.Categories = _context.Categories.ToList();
-            return View( _context.Products.ToList());
+            // following viewbag used in product's index
+            ViewBag.Product_cards = _context.Products.ToList();
+            if (cat_id != null && cat_id!=0)
+            {
+                return View(_context.Products.Where(cat => cat.CatId == cat_id));
+            }
+            else
+            {
+                return View(_context.Products.ToList());
+            }
+
+            
+            
         }
 
         // GET: Men Products
@@ -59,6 +71,16 @@ namespace ecommerece.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if (HttpContext.Session.GetString("type") == "4")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // following viewbag used in product's create
             ViewBag.CatList = _context.Categories.ToList();
             return View();
         }
@@ -71,6 +93,7 @@ namespace ecommerece.Controllers
         public async Task<IActionResult> Create([Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] Product product,
             IList<IFormFile> prodImg)
         {
+            
             string MultipleImages = "";
             foreach (var images in prodImg)
             {
@@ -91,17 +114,33 @@ namespace ecommerece.Controllers
                 {
                     MultipleImages = MultipleImages.Remove(0, 1);
                 }
+                product.SellerId = HttpContext.Session.GetInt32("UserId") ?? 0;
                 product.ProductImg = MultipleImages;
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            
+
             return View(product);
         }
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // following viewbag used in product's edit
+            ViewBag.CatList = _context.Categories.ToList();
+            // authorization restricted for public and customer
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if (HttpContext.Session.GetString("type") == "4")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -171,6 +210,16 @@ namespace ecommerece.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            // authorization restricted for public and customer
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if (HttpContext.Session.GetString("type") == "4")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             if (id == null || _context.Products == null)
             {
                 return NotFound();
@@ -216,6 +265,9 @@ namespace ecommerece.Controllers
         [HttpPost]
         public bool DeleteBtn(int id)
         {
+            
+
+
             try {
                 var Product_id = _context.Products.Find(id);
                 _context.Products.Remove(Product_id);
@@ -251,9 +303,10 @@ namespace ecommerece.Controllers
             foreach(Product P in CtgryLoad)
             {
                 var separate = P.ProductImg.Split(',');
-                FinalPics += "<div class='col-4 m-2'><div class='card' style=width: 18rem;'>  <img class='card-img-top' " +
-                    "src='" + separate[0]  +"' style = 'max-height: 300px' >  " +
-                    "<div class='card-body'>    <h5 class='card-title'>"+ P.ProductName +"</h5>    " +
+                FinalPics += "<div class='col-4 m-2'><div class='card' style=width: 18rem;'>" +
+                    "  <img class='card-img-top' src='" + separate[0]  +"' style = 'max-height: 300px' >  " +
+                    "<div class='card-body'>    " +
+                    "<h5 class='card-title'>"+ P.ProductName +"</h5>    " +
                     "<p class='card-text'>"+ P.LongDesc +"</p>    " +
                     "<a href='#' class='btn btn-primary'>Check Detail</a>  </div></div></div>";
             }

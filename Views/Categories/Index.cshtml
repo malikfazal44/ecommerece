@@ -5,20 +5,25 @@
 }
 
 <h1>Index</h1>
+@{
+    if (Context.Session.GetInt32("type") == 1 || Context.Session.GetInt32("type") == 2)
+    {
+        <p class="d-flex justify-content-end">
+            <a asp-action="Create" class="btn btn-primary ">Create New</a>
+    </p>}
+    
+}
 
-<p class="d-flex justify-content-end">
-    <a asp-action="Create" class="btn btn-primary ">Create New</a>
-</p>
-<table id="CatTable" class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Details
-            </th>
-            @*<th>
+    <table id="CatTable" class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Details
+                </th>
+                @*<th>
                 @Html.DisplayNameFor(model => model.CatStatus)
             </th>
             <th>
@@ -39,22 +44,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.ModifiedDate)
             </th>*@
-            <th>
-                Image
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CatName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CatDesc)
-            </td>
-            @*<td>
+                <th>
+                    Image
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatDesc)
+                </td>
+                @*<td>
                 @Html.DisplayFor(modelItem => item.CatStatus)
             </td>
             <td>
@@ -75,23 +80,55 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ModifiedDate)
             </td>*@
-            <td>
-                    <img src="@item.CatImage" class="rounded" style="max-height: 100px;" />
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CatId" class="btn btn-primary">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CatId" class="btn btn-info">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CatId" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                <td>
+                        <img src="@item.CatImage" class="rounded" style="max-height: 100px;" />
+                </td>
+                <td>
+                        @if (Context.Session.GetInt32("type") == 1 || Context.Session.GetInt32("type") == 2)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.CatId" class="btn btn-primary">Edit</a>
+                    }
 
-@section Scripts{
-    <script>
-        $(document).ready(function(){
-            $('#CatTable').DataTable();
-        });
-    </script>
+                        <a asp-action="Details" asp-route-id="@item.CatId" class="btn btn-info">Details</a> 
+                    @*<a asp-action="Delete" asp-route-id="@item.CatId" class="btn btn-danger">Delete</a>*@
+                        @if (Context.Session.GetInt32("type") == 1 || Context.Session.GetInt32("type") == 2)
+                    {
+                            <button class="delete-btn btn btn-danger" data-category-id=@item.CatId>Delete</button>
+                    }
+                    </td>
+            </tr>
 }
+        </tbody>
+    </table>
+
+    @section Scripts{
+    <script>
+            $(document).ready(function(){
+                $('#CatTable').DataTable();
+
+                // ajax json function started here for deleting while styaing on page
+                $('.delete-btn').click(function () {
+                    var cat_id = $(this).data('category-id');
+                    var row = $(this).parent().parent();
+
+
+
+
+
+                    $.ajax({
+                        url: '/Categories/DeleteBtnCat',
+                        type: 'post',
+                        data: {
+                            id: cat_id
+                        },
+                        success: function (response) {
+                            row.fadeOut(1500);
+                        },
+                        failure: function (response) {
+                            alert(response.d);
+                        },
+                    });
+                });
+            });
+    </script>
+    }

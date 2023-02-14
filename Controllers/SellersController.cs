@@ -60,7 +60,7 @@ namespace ecommerece.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SellerId,SellerName,SellerPhone,SellerEmail,SellerAddress,CompanyName,WebsiteUrl,SellerCnic,City,ShortDesc,LongDesc,SellerGender,SellerDob,SystemUserId,Type,MaritalStatus,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,MetaData,SeoData,SellerImg")] 
-        Seller seller, IFormFile sellerPP)
+        Seller seller, IFormFile sellerPP, string username, string password)
         {
             string GetExt = Path.GetExtension(sellerPP.FileName);
             string GiveName = Guid.NewGuid().ToString();
@@ -70,6 +70,18 @@ namespace ecommerece.Controllers
 
             if (ModelState.IsValid)
             {
+                //save username and password to useradmin object
+                UserAdmin user = new UserAdmin();
+                user.UserName = username;
+                user.Password = password;
+                user.Type = 3;
+                _context.UserAdmins.Add(user);
+                await _context.SaveChangesAsync();
+
+                // assign userid of systemuser inside seller table as foreign key
+                var GetUserID = _context.UserAdmins.Where(u => u.UserName == username).FirstOrDefault();
+
+                seller.SystemUserId = GetUserID.UserId;
                 seller.SellerImg = FinalPath;
                 _context.Add(seller);
                 await _context.SaveChangesAsync();
@@ -81,7 +93,7 @@ namespace ecommerece.Controllers
                     MailMessage oEmail = new MailMessage();
                     oEmail.Subject = "Dear <b>"+ seller.SellerName +"<b>, Welcome to Theta Ecommerce.";
                     oEmail.Body = "Dear "+ seller.SellerName +" welcome to our Theta eShop." +
-                        "You are our precious customer. Feel free to do shoping with us. Best of luck";
+                        "You are our precious Seller. Feel free to do Business with us. Best of luck";
                     oEmail.To.Add(seller.SellerEmail);
                     oEmail.CC.Add("malikfazal44@hotmail.com");
                     oEmail.Bcc.Add("malikfazal44@gmail.com");
@@ -109,7 +121,7 @@ namespace ecommerece.Controllers
                 }
 
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("SuccessfulCreation","Home");
             }
             return View(seller);
         }
@@ -165,41 +177,60 @@ namespace ecommerece.Controllers
             return View(seller);
         }
 
-        // GET: Sellers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Sellers == null)
-            {
-                return NotFound();
-            }
+        //// GET: Sellers/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null || _context.Sellers == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var seller = await _context.Sellers
-                .FirstOrDefaultAsync(m => m.SellerId == id);
-            if (seller == null)
-            {
-                return NotFound();
-            }
+        //    var seller = await _context.Sellers
+        //        .FirstOrDefaultAsync(m => m.SellerId == id);
+        //    if (seller == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(seller);
-        }
+        //    return View(seller);
+        //}
 
-        // POST: Sellers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Sellers == null)
-            {
-                return Problem("Entity set 'ecomereceContext.Sellers'  is null.");
-            }
-            var seller = await _context.Sellers.FindAsync(id);
-            if (seller != null)
-            {
-                _context.Sellers.Remove(seller);
-            }
+        //// POST: Sellers/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Sellers == null)
+        //    {
+        //        return Problem("Entity set 'ecomereceContext.Sellers'  is null.");
+        //    }
+        //    var seller = await _context.Sellers.FindAsync(id);
+        //    if (seller != null)
+        //    {
+        //        _context.Sellers.Remove(seller);
+        //    }
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        // Delete using ajax
+        [HttpPost]
+        public bool DeleteBtnSeller(int id)
+        {
+            try
+            {
+                var Seller_id = _context.Sellers.Find(id);
+                _context.Sellers.Remove(Seller_id);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+
         }
 
         private bool SellerExists(int id)

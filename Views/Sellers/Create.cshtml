@@ -4,153 +4,186 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Seller</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SellerName" class="control-label"></label>
-                <input asp-for="SellerName" class="form-control" />
-                <span asp-validation-for="SellerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SellerPhone" class="control-label"></label>
-                <input asp-for="SellerPhone" type="tel" class="form-control" />
-                <span asp-validation-for="SellerPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SellerEmail" class="control-label"></label>
-                <input asp-for="SellerEmail" type="email" class="form-control" />
-                <span asp-validation-for="SellerEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SellerAddress" class="control-label"></label>
-                <input asp-for="SellerAddress" class="form-control" />
-                <span asp-validation-for="SellerAddress" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompanyName" class="control-label"></label>
-                <input asp-for="CompanyName" class="form-control" />
-                <span asp-validation-for="CompanyName" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="WebsiteUrl" class="control-label"></label>
-                <input asp-for="WebsiteUrl" class="form-control" />
-                <span asp-validation-for="WebsiteUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SellerCnic" class="control-label"></label>
-                <input asp-for="SellerCnic" class="form-control" />
-                <span asp-validation-for="SellerCnic" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
-                @*<input asp-for="City" class="form-control" />*@
-                <select asp-for="City" class="form-control">
-                    <option value="">---Please select Your City---</option>
-                    <option value="1">Sialkot</option>
-                    <option value="2">Gujranwala</option>
-                    <option value="3">Lahore</option>
-                    <option value="4">Islamabad</option>
-                    <option value="5">Karachi</option>
-                </select>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="ShortDesc" class="control-label"></label>
-                <input asp-for="ShortDesc" class="form-control" />
-                <span asp-validation-for="ShortDesc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LongDesc" class="control-label"></label>
-                <input asp-for="LongDesc" class="form-control" />
-                <span asp-validation-for="LongDesc" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="SellerGender" class="control-label"></label>
-                @*<input asp-for="SellerGender" class="form-control" />*@
-                <select asp-for="SellerGender" class="form-control">
-                    <option value="">---Select your Gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
-                </select>
-                <span asp-validation-for="SellerGender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SellerDob" class="control-label"></label>
-                <input asp-for="SellerDob" class="form-control" />
-                <span asp-validation-for="SellerDob" class="text-danger"></span>
-            </div>
-            @*<div class="form-group">
-                <label asp-for="SystemUserId" class="control-label"></label>
-                <input asp-for="SystemUserId" class="form-control" />
-                <span asp-validation-for="SystemUserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaritalStatus" class="control-label"></label>
-                <input asp-for="MaritalStatus" class="form-control" />
-                <span asp-validation-for="MaritalStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedBy" class="control-label"></label>
-                <input asp-for="ModifiedBy" class="form-control" />
-                <span asp-validation-for="ModifiedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedDate" class="control-label"></label>
-                <input asp-for="ModifiedDate" class="form-control" />
-                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MetaData" class="control-label"></label>
-                <input asp-for="MetaData" class="form-control" />
-                <span asp-validation-for="MetaData" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SeoData" class="control-label"></label>
-                <input asp-for="SeoData" class="form-control" />
-                <span asp-validation-for="SeoData" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <label asp-for="SellerImg" class="control-label"></label>
-                <input id="sellerPP" name="sellerPP" type="file" class="form-control" />
-                <span asp-validation-for="SellerImg" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="col-6">
+        <img src="/data/img/placholdimage/signupgify.gif" class="img img-fluid" />"
+    </div>
+    <div class="col-6">
+        <h1>Sign Up <br /> </h1>
+        <h3>for Seller</h3>
+
+        
+        <hr />
+        <div class="row">
+
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input asp-for="SellerName" id="sellername" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="SellerName">Full Name</label>
+                            <span asp-validation-for="SellerName" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input  class="form-control" id="username" name="username" placeholder="name@example.com">
+                            <label for="username">Username</label>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input class="form-control" type="password" id="password" name="password" placeholder="name@example.com" />
+                            <label for="password">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input class="form-control" type="password" id="confirm_password" name="confirm_password" placeholder="name@example.com" />
+                            <label for="confirm_password">Confirm Password</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="CompanyName" id="companyname" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="CompanyName">Company Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input type="url" asp-for="WebsiteUrl" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="WebsiteUrl">Website</label>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input class="form-control" asp-for="SellerCnic" placeholder="name@example.com">
+                            <label asp-for="SellerCnic">National ID</label>
+                        </div>
+                    </div>
+
+                </div>*@
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="email" id="selleremail" asp-for="SellerEmail" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="SellerEmail">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input type="tel" id="sellerphone" asp-for="SellerPhone" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="SellerPhone">Mobile Phone</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="ShortDesc" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="ShortDesc">About</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input asp-for="LongDesc" id="longdesc"id placeholder="name@example.com" class="form-control" />
+                            <label asp-for="LongDesc">Description</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <div class="form-check form-check-inline">
+                                <input asp-for="SellerGender" class="form-check-input" type="radio" name="gender" id="Male" value="Male">
+                                <label asp-for="SellerGender" class="form-check-label" for="inlineRadio1"><b>Male</b></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input asp-for="SellerGender" class="form-check-input" type="radio" name="gender" id="Female" value="Female">
+                                <label asp-for="SellerGender" class="form-check-label" for="inlineRadio2"><b>Female</b></label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            
+                            <input asp-for="SellerDob" placeholder="name@example.com" class="form-control" />
+                            <label asp-for="SellerDob" class="control-label">Date of Birth</label>
+                            <span asp-validation-for="SellerDob" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <select class="form-control" asp-for="City">
+                                <option selected>Select your City</option>
+                                <option value="1">Sialkot</option>
+                                <option value="2">Lahore</option>
+                                <option value="3">Islamabad</option>
+                                <option value="4">Karachi</option>
+                            </select>
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mr-2">
+                        <div class="form-floating">
+                            <input asp-for="SellerAddress" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="SellerAddress">Address</label>
+                            <span asp-validation-for="SellerAddress" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="file" id="sellerPP" name="sellerPP" class="form-control" placeholder="name@example.com" />
+                            <label asp-for="SellerImg" class="control-label">Image</label>
+                            <span asp-validation-for="SellerImg" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group d-flex justify-content-end" style="position: relative; top: 39px;">
+                    <input type="submit" value="Create" class=" btn btn-success" />
+                </div>
+            </form>
+                 
+            
+        </div>
+        
+
+        <div>
+            <a asp-action="Index" class="btn btn-primary">Back to List</a>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
+
+    $(document).ready(function(){
+     @*using local storage*@
+     $('#sellername').blur(function(){
+            localStorage.setItem("sellerName", $('#sellername'));
+                localStorage.getItem("sellerName");
+     });
+
+    });
+
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

@@ -123,6 +123,8 @@ namespace ecommerece.Models
                     .HasColumnName("modified_date");
 
                 entity.Property(e => e.SeoData).HasColumnName("seo_data");
+
+                entity.Property(e => e.SystemUserId).HasColumnName("system_user_id");
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -603,6 +605,14 @@ namespace ecommerece.Models
                     .HasColumnName("password");
 
                 entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.Property(e => e.Timestamp)
+                    .HasColumnType("datetime")
+                    .HasColumnName("timestamp");
+
+                entity.Property(e => e.Token)
+                    .HasMaxLength(100)
+                    .HasColumnName("token");
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
