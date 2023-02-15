@@ -181,7 +181,7 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
-
+            const localStorageKey = "CartItems";
 
 
             var cartItems = localStorage.getItem('CartItems');
@@ -230,7 +230,7 @@
                     
                     console.log(cartItems);
 
-                    localStorage.setItem("CartItems",)
+                    localStorage.setItem(localStorageKey, JSON.stringify(cartItems));
                     //console.log(localStorage.getItem("counterValue"));
                     // console.log(value)
                 });

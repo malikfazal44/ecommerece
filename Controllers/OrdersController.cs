@@ -69,17 +69,17 @@ namespace ecommerece.Controllers
                     "              <small class='text-muted'>" + Product.ShortDecsc + "</small>" +
                     "               <div class='qty-div'>" +
                     "                   <button class='qty-decrese' style='background:none; border:none; max-width:100px'>-</button>" +
-                    "                   <span><input class='qty-counter' style='display:block; background:none; border:none' name='update[]' type='text' value='1' /></span>" +
+                    "                   <span><input class='qty-counter' style='display:block; background:none; border:none' name='update[]' type='text' value='"+items.quantity+"' /></span>" +
                     "                   <button data-productId="+ items.productId +" class='qty-increase' style='background:none; border:none'>+</button>" +
                     "               </div>" +
                     "            </div>" +
                     "            <span class='text-muted'>" + Product.ProductPrice + "</span>" +
                     "          </li>";
-                Total += Product.ProductPrice ?? 0 * items.quantity;
+                Total += (Product.ProductPrice ?? 0) * items.quantity;
             }
             FinalCart += "<li class='list-group-item d-flex justify-content-between'>" +
-                "            <span>Total (USD)</span>" +
-                "            <strong>" + Total + "PKR</strong>" +
+                "            <span>Total (PKR)</span>" +
+                "            <strong>" + Total + "</strong>" +
                 "          </li>";
             return FinalCart;
         }

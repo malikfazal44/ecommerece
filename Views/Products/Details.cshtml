@@ -35,22 +35,25 @@
 
     </div>
     <div class="col-6">
-        <div>
-            <h1 id="h1" class="">@Model.ShortDecsc</h1>
-            <div class="row">
-                <div class="col-6">
-                    <h3>@Model.ProductPrice Rs</h3><br />
-                    <div>
-                        <label for="quantity" class="">Quantity</label><br />
-                        <input type="number" id="quantity" min="1" value="1" />
-                    </div> <br />
-                    <div>
-                        <button id="addToCart" data-name="@Model.ProductName" data-id="@Model.ProductId" data-price="@Model.ProductPrice" class="btn btn-primary cart">Add to Cart</button>
+        @if (Context.Session.GetInt32("type") == 4)
+        {
+            <div>
+                <h1 id="h1" class="">@Model.ShortDecsc</h1>
+                <div class="row">
+                    <div class="col-6">
+                        <h3>@Model.ProductPrice Rs</h3><br />
+                        <div>
+                            <label for="quantity" class="">Quantity</label><br />
+                            <input type="number" id="quantity" min="1" value="1" />
+                        </div> <br />
+                        <div>
+                            <button id="addToCart" data-name="@Model.ProductName" data-id="@Model.ProductId" data-price="@Model.ProductPrice" class="btn btn-primary cart">Add to Cart</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        @*<div>
+        } else{
+        <div>
         <h4 class="">Product</h4>
         <hr />
         <dl class="row">
@@ -105,22 +108,25 @@
 
 
         </dl>
-        </div>*@
-        @*<div class="text-nowrap">
+        </div>
+        
+        <div class="text-nowrap">
         @if (Model.SellerId == Context.Session.GetInt32("UserId"))
         {
         <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a>
         }
 
         <a class="btn btn-danger" asp-action="Index">Back to List</a>
-        </div>*@
+        </div>
+        }
     </div>
 
 </div>
-
-<div id="RI" class="row">
-</div>
-
+@if (Context.Session.GetInt32("type") == 4)
+{
+    <div id="RI" class="row">
+    </div>
+}
 @section Scripts{
     <script>
 

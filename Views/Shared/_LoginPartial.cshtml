@@ -5,9 +5,11 @@
 <ul class="navbar-nav">
 @if (!string.IsNullOrEmpty(Context.Session.GetString("UserName")))
 {
+    if(Context.Session.GetInt32("type")==4){
         <li class="nav-item">
             <a href="/Orders/Checkout" class="nav-link text-dark"><i class="bi bi-cart"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span></i></a>
         </li>
+    }
     <li class="nav-item">
         <a  class="nav-link text-dark" href="/UserAdmins/Details/@Context.Session.GetString("UserId")" title="Manage">Hello @Context.Session.GetString("UserName")!</a>
     </li>
