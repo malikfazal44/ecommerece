@@ -53,7 +53,8 @@ namespace ecommerece.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WishlistId,ProductId,CustId,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] Wishlist wishlist)
+        public async Task<IActionResult> Create([Bind("WishlistId,ProductId,CustId,Status,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate")] 
+        Wishlist wishlist)
         {
             if (ModelState.IsValid)
             {

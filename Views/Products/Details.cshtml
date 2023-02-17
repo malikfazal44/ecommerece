@@ -35,7 +35,7 @@
 
     </div>
     <div class="col-6">
-        @if (Context.Session.GetInt32("type") == 4)
+        @if (Context.Session.GetInt32("type") == 4 || string.IsNullOrEmpty(Context.Session.GetString("UserName")))
         {
             <div>
                 <h1 id="h1" class="">@Model.ShortDecsc</h1>
@@ -48,6 +48,7 @@
                         </div> <br />
                         <div>
                             <button id="addToCart" data-name="@Model.ProductName" data-id="@Model.ProductId" data-price="@Model.ProductPrice" class="btn btn-primary cart">Add to Cart</button>
+                            <button id="wishlist" class="btn btn-warning wishlist" data-wishlistid="@Model.ProductId">Add to Wishlist</button>
                         </div>
                     </div>
                 </div>
@@ -122,7 +123,8 @@
     </div>
 
 </div>
-@if (Context.Session.GetInt32("type") == 4)
+<div style="height:60px; background-color:#e6ffe6;"></div>
+@if (Context.Session.GetInt32("type") == 4 || string.IsNullOrEmpty(Context.Session.GetString("UserName")))
 {
     <div id="RI" class="row">
     </div>
@@ -183,10 +185,7 @@
 
             });
 
-
-
-
-
+            
             //Ajax code starts. it prevents to load in DOM.
 
             $(function () {
@@ -204,6 +203,33 @@
                 data: {
                     id: '@Model.ProductId'
                 }
+            });
+
+            //wishlist flow
+            $('#wishlist').click(function () {
+                var wishcart = [];
+                var wishId = $(this).data('wishlistid');
+                //console.log(wishId);
+                if (localStorage.getItem("wishItems") != null && localStorage.getItem("wishItems") != "" && localStorage.getItem("wishItems") != "undefined") {
+                    wishcart = JSON.parse(localStorage.getItem("wishItems"));
+                    //checking if oriduct exist in wishlist
+                    if (wishcart.includes(wishId)) {
+                        alert("This product is already added to your Wishlist..");
+                        //disable the button after adding product to cart
+                        $("#addToCart[data-id='" + id + "']").prop("disabled", true);
+                    } else {
+                        wishcart.push(wishId);
+                    }
+                } else {
+                    wishcart.push(wishId);
+                }
+                //console.log(wishcart);
+                localStorage.setItem("wishItems", JSON.stringify(wishcart));
+                console.log(localStorage.getItem("wishItems"));
+
+            });
+            $.ajax({
+                url:'/Wishlists/Create'
             });
 
         });
