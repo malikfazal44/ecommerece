@@ -68,7 +68,7 @@ namespace ecommerece.Controllers
                     "              <h6 class='my-0'>" + Product.ProductName + "</h6><br/>" +
                     "              <small class='text-muted'>" + Product.ShortDecsc + "</small>" +
                     "               <div class='qty-div'>" +
-                    "                   <button class='qty-decrese' style='background:none; border:none; max-width:100px'>-</button>" +
+                    "                   <button data-productId="+ items.productId + " class='qty-decrease' style='background:none; border:none; max-width:100px'>-</button>" +
                     "                   <span><input class='qty-counter' style='display:block; background:none; border:none' name='update[]' type='text' value='"+items.quantity+"' /></span>" +
                     "                   <button data-productId="+ items.productId +" class='qty-increase' style='background:none; border:none'>+</button>" +
                     "               </div>" +

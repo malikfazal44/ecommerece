@@ -1,71 +1,67 @@
-﻿@model IEnumerable<ecommerece.Models.Wishlist>
+﻿@model List<Product>
 
-@{
-    ViewData["Title"] = "Index";
+
+   @if(Context.Session.GetString("UserName") != null){
+<h1>Wishlist</h1>
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var product in Model)
+        {
+            <li>@product.ProductName - @product.ProductPrice</li>
+        }
+    </ul>
 }
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CustId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.WishlistId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.WishlistId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WishlistId">Delete</a>
-            </td>
-        </tr>
+else
+{
+    <p>Your wishlist is empty.</p>
 }
-    </tbody>
-</table>
+    } else{
+        <ul id="wish_items" class="list-group mb-3">
+            </ul>
+
+    }
+    @section Scripts{
+        <script>
+        $(document).ready(function(){
+            let wishItems = localStorage.getItem("wishItems");
+            if (wishItems != null && wishItems != "") {
+                //console.log(wishItems);
+                // ajax call to checkout
+                $.ajax({
+                    url: '/Wishlists/Index',
+                    type: 'POST',
+                    data: {
+                        wishcart: wishItems
+                    },
+                    success: function (response) {
+                        //console.log(response);
+                        $('#wish_items').append(response);
+                    }
+
+                });
+            } 
+            else {
+                alert("Your wishlist is Empty");
+            }
+            $(document).delegate(".delete", "click", function () {
+                var productId = $(this).data('productid')
+                var wishItemLength = JSON.parse(localStorage.getItem("wishlistLength"));
+                var wishItem = JSON.parse(localStorage.getItem("wishItems"));
+                //console.log(wishItem);
+                //console.log(wishItemLength);
+                for (var i = 0; i < wishItemLength; i++) {
+                    if (wishItem[i] == productId) {
+                        //console.log(wishItemLength);
+                        wishItem.splice(i, 1)
+                    }
+                }
+                localStorage.setItem("wishItems", JSON.stringify(wishItem));
+                $(this).parent("li").fadeOut();
+            
+            });
+        });
+        
+        </script>
+    }

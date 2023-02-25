@@ -4,6 +4,9 @@
     ViewData["Title"] = "Index";
     var List = ViewBag.List;
     var Product_cards = ViewBag.Product_cards;
+    var AllProducts = ViewBag.AllProducts;
+    var ActiveProducts = ViewBag.ActiveProducts;
+    var InActiveProducts = ViewBag.InActiveProducts;
 }
 <style>
     /* tour card css */
@@ -59,23 +62,39 @@
 
 <h1>Products</h1>
 
+
+
 <div class="d-flex justify-content-center">
-    <h4>All
+    <h4>
+        All
         <span id="viewCounter" class="badge bg-info ">
-            @List 
+            @AllProducts
+        </span>
+    </h4>
+    <h4>
+        Active
+        <span id="viewCounter" class="badge bg-warning ">
+            @ActiveProducts
+        </span>
+    </h4>
+    <h4>
+        InActive
+        <span id="viewCounter" class="badge bg-danger ">
+            @InActiveProducts
         </span>
     </h4>
 </div>
 @if (Context.Session.GetInt32("type") == 3)
 {
     <p class="d-flex justify-content-end">
-    
+
         <a asp-action="Create" class="btn btn-success">Create New</a>
-    
-    
-</p>
+
+
+    </p>
 }
-@if (Context.Session.GetInt32("type") == 3){
+@if (Context.Session.GetInt32("type") == 3)
+{
     <table id="producttable" class="table ">
         <thead>
             <tr>
@@ -177,82 +196,101 @@
         </tbody>
     </table>
 }
-else if (string.IsNullOrEmpty(Context.Session.GetString("UserName")) || Context.Session.GetInt32("type") == 4){
+else if (string.IsNullOrEmpty(Context.Session.GetString("UserName")) || Context.Session.GetInt32("type") == 4)
+{
     <div class="row">
-    @foreach (var card in Product_cards)
-    {
-        
-        <div class="sale-card">
-            <div class="card-group">
-                <div class="card">
-                    @{
-                        string[] Product_Images = card.ProductImg.Split(",");
-                        if (string.IsNullOrEmpty(Product_Images[0]))
-                        {
-                            <a href="/Products/Details?id=@card.ProductId"><img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 225px;" class="card-img-top" /></a>
+        @foreach (var card in Product_cards)
+        {
+
+            <div class="sale-card">
+                <div class="card-group">
+                    <div class="card">
+                        @{
+                            string[] Product_Images = card.ProductImg.Split(",");
+                            if (string.IsNullOrEmpty(Product_Images[0]))
+                            {
+                                    <a href="/Products/Details?id=@card.ProductId"><img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 225px;" class="card-img-top" /></a>
+                            }
+                            else
+                            {
+                                    <a href="/Products/Details?id=@card.ProductId"><img src="@Product_Images[0]" style="max-height: 225px;" class="card-img-top" /></a>
+                            }
                         }
-                        else
-                        {
-                            <a href="/Products/Details?id=@card.ProductId"><img src="@Product_Images[0]" style="max-height: 225px;" class="card-img-top" /></a>
-                        }
-                    }
 
 
-                    <div class="discount-list"><span><b> @card.ProductPrice</b> Rs</span></div>
-                    <div class="card-body">
-                        <h4 class="card-title">@card.ShortDecsc</h4>
-                        <p class="card-text">@card.LongDesc</p>
-                        <p class="card-text"><small class="text-muted">Delivery in @card.DeliveryDays days</small></p>
+                        <div class="discount-list"><span><b> @card.ProductPrice</b> Rs</span></div>
+                        <div class="card-body">
+                            <h4 class="card-title">@card.ShortDecsc</h4>
+                            <p class="card-text">@card.LongDesc</p>
+                            <p class="card-text"><small class="text-muted">Delivery in @card.DeliveryDays days</small></p>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-        </div>
-        
-    }
+        }
     </div>
 }
 
 
 
 @section Scripts{
-        <script>
-            $(document).ready(function () {
-                $('#producttable').DataTable();
+    <script>
+        $(document).ready(function () {
+            $('#producttable').DataTable();
+
+
+
+            // ajax json function started here for deleting while styaing on page
+            $('.delete-btn').click(function () {
+                var prod_id = $(this).data('product-id');
+                var row = $(this).parent().parent();
+
+
+                $.ajax({
+                    url: '/Products/DeleteBtn',
+                    type: 'post',
+                    data: {
+                        id: prod_id
+                    },
+                    success: function (response) {
+                        row.fadeOut(1500);
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
             });
 
-               
 
+            //checking if user logged in, save localstorage data to DB
+            $(function () {
+                var customerUsername = '@Context.Session.GetString("UserName")';
+                if (customerUsername != null && customerUsername != "" && '@Context.Session.GetInt32("type")'==4) {
+                    var wishItems = localStorage.getItem("wishItems");
+                    //console.log(wishItems);
+                    if (wishItems != null && wishItems.length > 0) {
+                        $.ajax({
+                            url: '/Wishlists/Create',
+                            type: 'POST',
+                            data: {
+                                username: customerUsername,
+                                product: wishItems
+                            },
+                            success: function (data) {
+                                // Clear local storage
+                                //console.log(data);
+                                localStorage.removeItem("wishItems");
+                                localStorage.removeItem("wishlistLength");
+                                alert('Your wishlist items added successfully');
 
-            
-
-
-
-
-        // ajax json function started here for deleting while styaing on page
-        $('.delete-btn').click(function () {
-            var prod_id = $(this).data('product-id');
-            var row = $(this).parent().parent();
-            
-
-
-            
-
-            $.ajax({
-                url:'/Products/DeleteBtn',
-                type: 'post',
-                data: {
-                    id: prod_id
-                },
-                success: function (response) {
-                    row.fadeOut(1500);
-                },
-                failure: function (response) {
-                    alert(response.d);
-                },
+                            }
+                        });
+                    }
+                }
             });
+
         });
-
-
-        </script>
+    </script>
 }

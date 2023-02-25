@@ -5,26 +5,34 @@
 <ul class="navbar-nav">
 @if (!string.IsNullOrEmpty(Context.Session.GetString("UserName")))
 {
-        if (Context.Session.GetInt32("type") == 4 || string.IsNullOrEmpty(Context.Session.GetString("UserName")))
+        if (Context.Session.GetInt32("type") == 4)
         {
-        <li class="nav-item">
-                <a href="/Orders/Checkout" class="btn btn-white nav-link"><i class="bi bi-cart-dash"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span></i></a>
-        </li>
-    }
+            
+                <li class="nav-item">
+                    <a href="/Wishlists/Index" class=" nav-link text-dark"><i class="bi bi-balloon-heart-fill" style="font-size:large"><span id="wishlist-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span> </i></a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Orders/Checkout" class="btn btn-white nav-link"><i class="bi bi-cart4" style="font-size:large"><span id="cart-in-nav" class=" translate-middle badge rounded-pill bg-danger"></span></i></a>
+                </li>
+            
+        }
     <li class="nav-item">
-            <a class="text-light nav-link text-dark" href="/UserAdmins/Details/@Context.Session.GetString("UserId")" title="Manage">Hello @Context.Session.GetString("UserName")!</a>
+            <a class=" nav-link text-dark" href="/UserAdmins/Details/@Context.Session.GetString("UserId")" title="Manage">Hello @Context.Session.GetString("UserName")!</a>
     </li>
     <li class="nav-item">
-            <a href="/UserAdmins/Logout" class="text-light nav-link text-dark"> | Logout</a>
+            <a href="/UserAdmins/Logout" class=" nav-link text-dark"> | Logout</a>
     </li>
 }
 else
 {
         <li class="nav-item">
-            <a href="/Orders/Checkout" class="text-light nav-link text-dark"><i class="bi bi-cart"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span> </i></a>
+            <a href="/Wishlists/Index" class=" nav-link text-dark"><i class="bi bi-balloon-heart-fill" style="font-size:large"><span id="wishlist-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span> </i></a>
+        </li>
+        <li class="nav-item">
+            <a href="/Orders/Checkout" class=" nav-link text-dark"><i class="bi bi-cart4" style="font-size:large"><span id="cart-in-nav" class="position-absolute translate-middle badge rounded-pill bg-danger"></span> </i></a>
         </li>
         <li class="nav-item dropdown">
-            <a class="text-light nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class=" nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Register
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -34,7 +42,7 @@ else
             </ul>
         </li>
     <li class="nav-item">
-            <a class="text-light nav-link" href="/UserAdmins/Login">Log in</a>
+            <a class=" nav-link" href="/UserAdmins/Login">Log in</a>
     </li>
 }
 </ul>

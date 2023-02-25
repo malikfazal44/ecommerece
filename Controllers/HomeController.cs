@@ -18,7 +18,7 @@ namespace ecommerece.Controllers
         public IActionResult Index()
         {
             // this viewbag is used in layout page in navbar
-            ViewBag.category = _context.Categories.ToList();
+                ViewBag.category = _context.Categories.ToList();
             // follwing viewbag is used in index of home for showing product
             ViewBag.ProductCard = _context.Products.Take(3).ToList();
             // following viewbag  is used in home index for taing category list

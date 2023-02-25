@@ -212,7 +212,8 @@
                 //increse counter
                 $(document).delegate(".qty-increase","click",function () {
                     var parentDiv = $(this).parent();
-                    var productId = $(this).data("productid")
+                    var productId = $(this).data("productid");
+                    console.log(productId);
                     var inputQuantity = parentDiv.find(".qty-counter");
                     value = parseInt($(inputQuantity).val());
                     $(inputQuantity).val(value + 1);
@@ -220,7 +221,7 @@
                     var cartItems = JSON.parse(localStorage.getItem("CartItems"));
                     var item = cartItems.find(itm=>itm.productId== productId);
 
-                    item.quantity = value;
+                    item.quantity = $(inputQuantity).val();
                     //updating object
                     for(var i=0;i<cartItems.length;i++){
                         if (cartItems[i].productId == productId){
@@ -231,15 +232,39 @@
                     console.log(cartItems);
 
                     localStorage.setItem(localStorageKey, JSON.stringify(cartItems));
+                    //$("#cart_items").load(location.href + " #cart_items");
+
                     //console.log(localStorage.getItem("counterValue"));
                     // console.log(value)
                 });
                 //decrease counter
                 $(document).delegate(".qty-decrease","click",function () {
                     var parentDiv = $(this).parent();
-                    value = parseInt($('.qty-counter').val());
-                    if (value > 0) {
-                        $('.qty-counter').val(value - 1);
+                    var productId = $(this).data("productid");
+                    console.log(productId);
+                    var inputQuantity = parentDiv.find(".qty-counter");
+                    value = parseInt($(inputQuantity).val());
+                    if(value > 0){
+                    $(inputQuantity).val(value - 1);
+                    //console.log(value);
+                    var cartItems = JSON.parse(localStorage.getItem("CartItems"));
+                    var item = cartItems.find(itm => itm.productId == productId);
+
+                    item.quantity = $(inputQuantity).val();
+                    //updating object
+                    for (var i = 0; i < cartItems.length; i++) {
+                        if (cartItems[i].productId == productId) {
+                            cartItems.splice(i, 1, item)
+                        }
+                    }
+
+                    console.log(cartItems);
+
+                    localStorage.setItem(localStorageKey, JSON.stringify(cartItems));
+
+                    }
+                    else{
+                        alert("Item can not be less than zero");
                     }
                 });
 

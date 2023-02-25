@@ -25,7 +25,13 @@ namespace ecommerece.Controllers
         // GET: Products
         public IActionResult Index(int cat_id)
         {
-            
+            if (HttpContext.Session.GetInt32("UserId")!=null)
+            {
+                ViewBag.AllProducts = _context.Products.Where(p => p.SellerId == HttpContext.Session.GetInt32("UserId")).ToList().Count();
+                ViewBag.ActiveProducts = _context.Products.Where(p => p.SellerId == HttpContext.Session.GetInt32("UserId") && p.Status==1).ToList().Count();
+                ViewBag.InActiveProducts = _context.Products.Where(p => p.SellerId == HttpContext.Session.GetInt32("UserId") && p.Status == 0).ToList().Count();
+
+            }
             ViewBag.List = _context.Products.ToList().Count();
             // following viewbag used in product's index
             ViewBag.Product_cards = _context.Products.ToList();
@@ -42,12 +48,7 @@ namespace ecommerece.Controllers
             
         }
 
-        // GET: Men Products
-        public IActionResult MenProducts()
-        {
-            // var Men = _context.Categories.Find(_context.Categories.Where(men => men.CatName == "Men"));
-            return View();
-        }
+        
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -160,34 +161,38 @@ namespace ecommerece.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,SellerId,DeliveryDays,CatId,Quantity,ShortDecsc,LongDesc,ProductPrice,DeliveryCharges,Status,MetaData,SeoData,CreatedBy,CreatedDate,ModifiedBy,ModifiedDate,ProductImg")] 
-        Product product, IList<IFormFile> prodImg)
+        Product product, IList<IFormFile>? prodImg)
         {
             if (id != product.ProductId)
             {
                 return NotFound();
             }
-            string MultiImages = "";
-            foreach (var file in prodImg)
-            {
-
-
-                string FinalPath = "/data/img/products/" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                using (FileStream ProdFS = new FileStream(_img.WebRootPath, FileMode.Create))
+            if (prodImg.Count >0 ) {
+                string MultiImages = "";
+                foreach (var file in prodImg)
                 {
 
-                    file.CopyTo(ProdFS);
-                }
-                MultiImages += "," + FinalPath;
-            }
-            if (ModelState.IsValid)
-            {
-                try
-                {
+
+                    string FinalPath = "/data/img/products/" + Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    using (FileStream ProdFS = new FileStream(_img.WebRootPath, FileMode.Create))
+                    {
+
+                        file.CopyTo(ProdFS);
+                    }
+                    MultiImages += "," + FinalPath;
                     if (MultiImages.StartsWith(","))
                     {
                         MultiImages = MultiImages.Remove(0, 1);
                     }
                     product.ProductImg = MultiImages;
+                }
+            }
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }

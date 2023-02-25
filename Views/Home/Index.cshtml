@@ -218,11 +218,11 @@
                             string[] Product_Images = card.ProductImg.Split(",");
                             if (string.IsNullOrEmpty(Product_Images[0]))
                             {
-                                            <a href="/Products/Details?id=@card.ProductId"><img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 225px;" class="card-img-top" /></a>
+                                                                                    <a href="/Products/Details?id=@card.ProductId"><img src="/data/img/placholdimage/placeholder_image.png" style="max-height: 225px;" class="card-img-top" /></a>
                             }
                             else
                             {
-                                        <a href="/Products/Details?id=@card.ProductId"><img src="@Product_Images[0]" style="max-height: 225px;" class="card-img-top" /></a>
+                                                                                <a href="/Products/Details?id=@card.ProductId"><img src="@Product_Images[0]" style="max-height: 225px;" class="card-img-top" /></a>
                             }
                         }
 
